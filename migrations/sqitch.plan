@@ -1,5 +1,0 @@
-%syntax-version=1.0.0
-%project=circles
-
-create_tables 2022-05-03T12:40:00Z Etudiant O'clock <student@teleporter> # Creations des tables user, cercle, message, event
-surname_trigfunc 2022-05-03T13:24:12Z Etudiant O'clock <student@teleporter> # Creation d'une function et d'un trigger pour generer un surname si il est null a l'insertion
