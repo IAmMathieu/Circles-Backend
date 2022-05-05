@@ -1,7 +1,7 @@
 const express = require("express");
-const APIError = require("../services/APIError");
 const routerWrapper = require("../middlewares/routerWrapper");
 const handleError = require("../middlewares/handleError");
+const jwbtoken = require("../middlewares/jwtMiddleware");
 const app = express();
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.post("/api/login", routerWrapper(userController.getUser));
 router.post("/api/register", routerWrapper());
 router
   .route("/api/profil/:id(\\d+)")
-  .get(routerWrapper(userController.getUserInfo))
+  .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
   .patch(routerWrapper())
   .delete(routerWrapper());
 router.get("/api/profil/:id/circles", routerWrapper());
@@ -46,15 +46,6 @@ router
   .post(routerWrapper())
   .patch(routerWrapper())
   .delete(routerWrapper());
-
-// Gestion user non authentifié - url non reconnu
-app.use(function (err, req, res, next) {
-  if (err.name === "UnauthorizedError") {
-    res.status(401).send("Unauthorized User");
-  } else {
-    next(err);
-  }
-});
 
 //Gestion de l'erreur
 router.use(handleError);
