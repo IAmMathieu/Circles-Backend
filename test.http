@@ -1,0 +1,7 @@
+POST http://localhost:1337/api/login
+Content-Type: application/json
+
+{
+    "email":"poppelrobin@gmail.com",
+    "password": "js4life"
+}
