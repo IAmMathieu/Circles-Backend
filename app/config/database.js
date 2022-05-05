@@ -13,4 +13,8 @@ const client = new Pool({
 
 client.connect();
 
+<<<<<<< HEAD
 module.exports = client;
+=======
+module.exports = client;
+>>>>>>> develop
