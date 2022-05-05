@@ -18,9 +18,7 @@ const jwbtoken = {
 
   getAuthorization(req, res, next) {
     const authHeader = req.headers["authorization"];
-    console.log(req.headers);
     const token = authHeader && authHeader.split(" ")[1];
-    console.log(token);
     if (token == null) return res.sendStatus(401);
 
     jsonwebtoken.verify(token, process.env.JWTSECRET, (err, userId) => {
