@@ -13,12 +13,12 @@ const calendarController = require("../controllers/calendarController");
 
 // Controller User
 router.post("/api/login", routerWrapper(userController.getUser));
-router.post("/api/register", routerWrapper());
+router.post("/api/register", routerWrapper(userController.createUser));
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
-  .patch(routerWrapper())
-  .delete(routerWrapper());
+  .patch(routerWrapper(userController.patchUser))
+  .delete(routerWrapper(userController.deletUser));
 router.get("/api/profil/:id/circles", routerWrapper());
 
 //Controller Circle
