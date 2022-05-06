@@ -34,7 +34,7 @@ router
 //Controller Calendar
 router
   .route("/api/circle/:id/calendar")
-  .get(routerWrapper())
+  .get(routerWrapper(calendarController.addEvent))
   .post(routerWrapper())
   .patch(routerWrapper())
   .delete(routerWrapper());
