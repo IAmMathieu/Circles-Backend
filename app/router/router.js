@@ -2,6 +2,7 @@ const express = require("express");
 const APIError = require("../services/APIError");
 const routerWrapper = require("../middlewares/routerWrapper");
 const handleError = require("../middlewares/handleError");
+const jwbtoken = require("../middlewares/jwtMiddleware");
 const app = express();
 const router = express.Router();
 
@@ -16,20 +17,30 @@ router.post("/api/login", routerWrapper(userController.getUser));
 router.post("/api/register", routerWrapper());
 router
   .route("/api/profil/:id(\\d+)")
-  .get(routerWrapper(userController.getUserInfo))
+  .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
   .patch(routerWrapper())
   .delete(routerWrapper());
 router.get("/api/profil/:id/circles", routerWrapper());
 
 //Controller Circle
-router.post("/api/circle", routerWrapper());
+router.post(
+  "/api/circle",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.createCircle)
+);
 router.post("/api/circle/:circle_id/new/:user_id", routerWrapper());
 
 router
   .route("/api/circle/:id")
-  .get(routerWrapper())
-  .patch(routerWrapper())
-  .delete(routerWrapper());
+  .get(jwbtoken.getAuthorization, routerWrapper(circleController.getCircle))
+  .patch(
+    jwbtoken.getAuthorization,
+    routerWrapper(circleController.updateCircle)
+  )
+  .delete(
+    jwbtoken.getAuthorization,
+    routerWrapper(circleController.deleteCircle)
+  );
 
 //Controller Calendar
 router
