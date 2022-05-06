@@ -1,7 +1,68 @@
+POST https://cercles.herokuapp.com/api/login
+Content-Type: application/json
+
+{
+    "email": "tourte.m@gmail.com",
+    "password": "123456"
+}
+
+
+###
+
+GET https://cercles.herokuapp.com/api/profil/3
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgxNTY2NSwiZXhwIjoxNjUxODE5MjY1fQ.dN0fzb0CPoQ00m6NM1ncvROHDqdiH9sfhCM5Vg6R5t07
+
+###
+
 POST http://localhost:1337/api/login
 Content-Type: application/json
 
 {
-    "email":"poppelrobin@gmail.com",
-    "password": "js4life"
+    "email": "tourte.m@gmail.com",
+    "password": "123456"
+}
+
+###
+
+GET http://localhost:1337/api/profil/3
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyNDQ2NSwiZXhwIjoxNjUxODI4MDY1fQ.bjpK2VSrcvMUXFKVF0fobclr4q0bDTSyfG3T8m9rYco
+
+###
+
+GET http://localhost:1337/api/circle/2
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyMDE4MCwiZXhwIjoxNjUxODIzNzgwfQ.uA7h3ydh3nvWOO3sCSIYQXRoorluGhTnzVlL24unmPE
+
+###
+
+PATCH http://localhost:1337/api/circle/2
+Content-Type: application/json
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyMDE4MCwiZXhwIjoxNjUxODIzNzgwfQ.uA7h3ydh3nvWOO3sCSIYQXRoorluGhTnzVlL24unmPE
+
+{
+    "name": "La famille"
+}
+
+###
+POST http://localhost:1337/api/circle/new/3
+Content-Type: application/json
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyNjMyNiwiZXhwIjoxNjUxODI5OTI2fQ.q3QaBrtcEMAKc_dsfRuQwvKmYGt3EI9NcLHO-HnpU1Q
+
+{
+    "unique_code": "IpoMUlYC"
+}
+
+###
+
+DELETE http://localhost:1337/api/circle/remove/3
+Content-Type: application/json
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyNjMyNiwiZXhwIjoxNjUxODI5OTI2fQ.q3QaBrtcEMAKc_dsfRuQwvKmYGt3EI9NcLHO-HnpU1Q
+
+{
+    "circle_id": 9
 }
