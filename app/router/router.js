@@ -2,6 +2,7 @@ const express = require("express");
 const APIError = require("../services/APIError");
 const routerWrapper = require("../middlewares/routerWrapper");
 const handleError = require("../middlewares/handleError");
+<<<<<<< HEAD
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const app = express();
 const router = express.Router();
@@ -18,11 +19,22 @@ router.post("/api/register", routerWrapper());
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
+=======
+const router = express.Router();
+
+// Controller User
+router.post("/api/login", routerWrapper());
+router.post("/api/register", routerWrapper());
+router
+  .route("/api/profil/:id(\\d+)")
+  .get(routerWrapper())
+>>>>>>> 337f88c (Basic structure of the API  app)
   .patch(routerWrapper())
   .delete(routerWrapper());
 router.get("/api/profil/:id/circles", routerWrapper());
 
 //Controller Circle
+<<<<<<< HEAD
 router.post(
   "/api/circle",
   jwbtoken.getAuthorization,
@@ -51,6 +63,16 @@ router
     jwbtoken.getAuthorization,
     routerWrapper(circleController.deleteCircle)
   );
+=======
+router.post("/api/circle", routerWrapper());
+router.post("/api/circle/:circle_id/new/:user_id", routerWrapper());
+
+router
+  .route("/api/circle/:id")
+  .get(routerWrapper())
+  .patch(routerWrapper())
+  .delete(routerWrapper());
+>>>>>>> 337f88c (Basic structure of the API  app)
 
 //Controller Calendar
 router
@@ -68,6 +90,7 @@ router
   .patch(routerWrapper())
   .delete(routerWrapper());
 
+<<<<<<< HEAD
 // Gestion user non authentifié - url non reconnu
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
@@ -75,6 +98,11 @@ app.use(function (err, req, res, next) {
   } else {
     next(err);
   }
+=======
+// Gestion 404 - url non reconnu
+router.use((req, _) => {
+  throw new APIError("This url cannot be found", req.url, 404);
+>>>>>>> 337f88c (Basic structure of the API  app)
 });
 
 //Gestion de l'erreur
