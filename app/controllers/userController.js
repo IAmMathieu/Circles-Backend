@@ -23,6 +23,7 @@ const userController = {
       } else {
         res.json({
           logged: true,
+          user_id: user.id,
           surname: user.surname,
           token: jwbtoken.generateAccessToken(user.id),
         });
