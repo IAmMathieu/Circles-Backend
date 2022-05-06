@@ -39,7 +39,32 @@ const circleController = {
 
     const circle = await circleDatamapper.deleteCircle(circleId, req.body);
 
-    res.json(circle);
+    res.status(204).json();
+  },
+
+  async addUserToCircle(req, res) {
+    const userId = req.params.user_id;
+    const uniqueCode = req.body.unique_code;
+
+    const circle = await circleDatamapper.addUserToCircle(userId, uniqueCode);
+
+    if (circle) {
+      res.status(200).send("User added to circle");
+    } else {
+      res.status(400).send("Bad request or incorrect informations");
+    }
+  },
+
+  async removeUserFromCircle(req, res) {
+    const userId = req.params.user_id;
+    const circleId = req.body.circle_id;
+
+    const circle = await circleDatamapper.removeUserFromCircle(
+      userId,
+      circleId
+    );
+
+    res.status(204).json();
   },
 };
 

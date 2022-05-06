@@ -28,7 +28,17 @@ router.post(
   jwbtoken.getAuthorization,
   routerWrapper(circleController.createCircle)
 );
-router.post("/api/circle/:circle_id/new/:user_id", routerWrapper());
+router.post(
+  "/api/circle/new/:user_id",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.addUserToCircle)
+);
+
+router.delete(
+  "/api/circle/remove/:user_id",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.removeUserFromCircle)
+);
 
 router
   .route("/api/circle/:id")
