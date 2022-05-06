@@ -39,7 +39,11 @@ const circleController = {
 
     const circle = await circleDatamapper.deleteCircle(circleId, req.body);
 
-    res.status(204).json();
+    if (circle) {
+      res.status(204);
+    } else {
+      res.status(400).send("Bad request or incorrect informations");
+    }
   },
 
   async addUserToCircle(req, res) {
@@ -64,7 +68,11 @@ const circleController = {
       circleId
     );
 
-    res.status(204).json();
+    if (circle) {
+      res.status(204);
+    } else {
+      res.status(400).send("Bad request or incorrect informations");
+    }
   },
 };
 

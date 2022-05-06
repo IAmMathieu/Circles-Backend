@@ -127,6 +127,8 @@ const circleDatamapper = {
       [userId, circleId]
     );
 
+    console.log(!!circle.rowCount);
+
     return !!circle.rowCount;
   },
 };
