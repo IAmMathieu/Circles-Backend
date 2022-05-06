@@ -44,9 +44,11 @@ const userController = {
       userPassword,
       Number(process.env.saltRounds)
     );
-    const createUser = await userDataMapper.createUser(userData);
-    if (createUser) {
-      res.send("User is created");
+    const createdUser = await userDataMapper.createUser(userData);
+
+    createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
+    if (createdUser) {
+      res.json(createdUser);
     }
   },
 
