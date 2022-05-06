@@ -2,12 +2,12 @@ const client = require("../config/database");
 
 const userDataMapper = {
   //Find a user by email and his password
-  async getUser(email, password) {
+  async getUser(email) {
     const query = {
       text: `SELECT * 
                 FROM "user"
-                WHERE "user".email = $1 AND "user".password = $2`,
-      values: [email, password],
+                WHERE "user".email = $1`,
+      values: [email],
     };
     const user = await client.query(query);
     return user.rows[0];
@@ -27,11 +27,11 @@ const userDataMapper = {
   },
 
   //Create a user
-  async createUser(firstname,lastname, email, password, birthdate,img_url){
+  async createUser(userData){
     const query = {
       text : `INSERT INTO "user" ("firstname","lastname", "email", "password", "birthdate","img_url")
               VALUES ($1,$2,$3,$4,$5,$6)`,
-      values : [firstname,lastname,email, password, birthdate,img_url],
+      values : [userData.firstname,userData.lastname,userData.email, userData.password, userData.birthdate,userData.img_url],
     }
 
     return await client.query(query);
