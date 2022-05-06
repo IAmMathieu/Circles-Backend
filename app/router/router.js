@@ -1,4 +1,5 @@
 const express = require("express");
+const APIError = require("../services/APIError");
 const routerWrapper = require("../middlewares/routerWrapper");
 const handleError = require("../middlewares/handleError");
 const jwbtoken = require("../middlewares/jwtMiddleware");
@@ -17,9 +18,13 @@ router.post("/api/register", routerWrapper(userController.createUser));
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
-  .patch(routerWrapper(userController.patchUser))
-  .delete(routerWrapper(userController.deletUser));
-router.get("/api/profil/:id/circles", routerWrapper());
+  .patch(jwbtoken.getAuthorization, routerWrapper(userController.patchUser))
+  .delete(jwbtoken.getAuthorization, routerWrapper(userController.deletUser));
+router.get(
+  "/api/profil/:id/circles",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.getCirclesForUser)
+);
 
 //Controller Circle
 router.post(
@@ -27,7 +32,17 @@ router.post(
   jwbtoken.getAuthorization,
   routerWrapper(circleController.createCircle)
 );
-router.post("/api/circle/:circle_id/new/:user_id", routerWrapper());
+router.post(
+  "/api/circle/new/:user_id",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.addUserToCircle)
+);
+
+router.delete(
+  "/api/circle/remove/:user_id",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.removeUserFromCircle)
+);
 
 router
   .route("/api/circle/:id")
@@ -56,6 +71,15 @@ router
   .post(routerWrapper())
   .patch(routerWrapper())
   .delete(routerWrapper());
+
+// Gestion user non authentifié - url non reconnu
+app.use(function (err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).send("Unauthorized User");
+  } else {
+    next(err);
+  }
+});
 
 //Gestion de l'erreur
 router.use(handleError);

@@ -27,21 +27,35 @@ const userDataMapper = {
   },
 
   //Create a user
-  async createUser(userData){
+  async createUser(userData) {
     const query = {
-      text : `INSERT INTO "user" ("firstname","lastname", "email", "password", "birthdate","img_url")
+      text: `INSERT INTO "user" ("firstname","lastname", "email", "password", "birthdate","img_url")
               VALUES ($1,$2,$3,$4,$5,$6)`,
-      values : [userData.firstname,userData.lastname,userData.email, userData.password, userData.birthdate,userData.img_url],
-    }
+      values: [
+        userData.firstname,
+        userData.lastname,
+        userData.email,
+        userData.password,
+        userData.birthdate,
+        userData.img_url,
+      ],
+    };
 
     return await client.query(query);
-
   },
 
   //Patch a user
-  async patchUser(id, firstname,lastname, email, password, birthdate,img_url){
+  async patchUser(
+    id,
+    firstname,
+    lastname,
+    email,
+    password,
+    birthdate,
+    img_url
+  ) {
     const query = {
-      text : `UPDATE "user" 
+      text: `UPDATE "user" 
               SET "firstname" = $1,
               "lastname" = $2,
               "email" = $3,
@@ -49,21 +63,21 @@ const userDataMapper = {
               "birthdate" = $5,
               "img_url" = $6
               WHERE "user".id = $7`,
-      values : [firstname,lastname, email, password, birthdate,img_url, id],
-    } 
+      values: [firstname, lastname, email, password, birthdate, img_url, id],
+    };
     return await client.query(query);
   },
 
   //Delete a user
 
-  async deleteUser(id){
+  async deleteUser(id) {
     const query = {
-      text : `DELETE FROM "user" 
+      text: `DELETE FROM "user" 
               WHERE "user".id = $1`,
-      values : [id],
-    } 
+      values: [id],
+    };
     return await client.query(query);
-  }
+  },
 };
 
 module.exports = userDataMapper;

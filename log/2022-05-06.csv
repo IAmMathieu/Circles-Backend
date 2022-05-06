@@ -14,3 +14,8 @@
 10:39:00,/api/circle/new/3,TypeError: Cannot read properties of undefined (reading 'rows')
 10:39:42,/api/circle/new/3,TypeError: Cannot read properties of undefined (reading '0')
 10:56:09,/api/circle/remove/3,TypeError: this.removeUserFromCircle is not a function
+12:29:50,/api/register,TypeError: method is not a function
+12:30:42,/api/register,error: date/time field value out of range: "2001-12-35"
+12:42:49,/api/register,Error: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue
+12:42:54,/api/register,Error: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue
+12:44:21,/api/register,Error: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue

@@ -2,8 +2,8 @@ POST https://cercles.herokuapp.com/api/login
 Content-Type: application/json
 
 {
-    "email": "tourte.m@gmail.com",
-    "password": "123456"
+    "email": "lh@gmail.com",
+    "password": "$2b$10$08rFvdGKc3atHpZoSpDN9Oh.Omwr3X4pU6Iy6fLIDCnByTrwBhvRS"
 }
 
 
@@ -19,8 +19,22 @@ POST http://localhost:1337/api/login
 Content-Type: application/json
 
 {
-    "email": "tourte.m@gmail.com",
-    "password": "123456"
+    "email": "lh@gmail.com",
+    "password": "$2b$10$08rFvdGKc3atHpZoSpDN9Oh.Omwr3X4pU6Iy6fLIDCnByTrwBhvRS"
+}
+
+###
+
+POST http://localhost:1337/api/register
+Content-Type: application/json
+
+{
+    "firstname": "Peppa",
+    "lastname": "Pig",
+    "email": "peppapig@oclock.io",
+    "password": "ilovebacon",
+    "birthdate": "2001-12-25",
+    "img_url": ""
 }
 
 ###
