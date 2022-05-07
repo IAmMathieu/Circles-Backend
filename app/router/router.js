@@ -17,8 +17,8 @@ router.post("/api/register", routerWrapper(userController.createUser));
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
-  .patch(routerWrapper(userController.patchUser))
-  .delete(routerWrapper(userController.deletUser));
+  .patch(jwbtoken.getAuthorization,routerWrapper(userController.patchUser))
+  .delete(jwbtoken.getAuthorization,routerWrapper(userController.deletUser));
 router.get("/api/profil/:id/circles", routerWrapper());
 
 //Controller Circle
@@ -43,11 +43,15 @@ router
 
 //Controller Calendar
 router
-  .route("/api/circle/:id/calendar")
-  .get(routerWrapper(calendarController.addEvent))
-  .post(routerWrapper())
-  .patch(routerWrapper())
-  .delete(routerWrapper());
+  .route("/api/profil/:id/circle/:circle_id/calendar")
+  .get(jwbtoken.getAuthorization,routerWrapper(calendarController.allEvent))
+  .post(jwbtoken.getAuthorization,routerWrapper(calendarController.addEvent))
+
+router
+  .route("/api/profil/:id/circle/:circle_id/calendar/:event_id")
+  .get(jwbtoken.getAuthorization,routerWrapper(calendarController.oneEvent))
+  .patch(jwbtoken.getAuthorization,routerWrapper(calendarController.patchEvent))
+  .delete(jwbtoken.getAuthorization,routerWrapper());
 
 // Controller Chat
 router.get("/api/circle/:id/chat/", routerWrapper());

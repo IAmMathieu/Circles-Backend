@@ -14,3 +14,50 @@
 10:39:00,/api/circle/new/3,TypeError: Cannot read properties of undefined (reading 'rows')
 10:39:42,/api/circle/new/3,TypeError: Cannot read properties of undefined (reading '0')
 10:56:09,/api/circle/remove/3,TypeError: this.removeUserFromCircle is not a function
+15:09:34,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:18:07,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:18:32,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:20:00,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:20:18,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:21:01,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:21:38,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:52:47,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:56:02,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+15:56:24,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+16:02:31,/api/profil/1/circle/1/calendar,TypeError: method is not a function
+16:13:22,/api/profil/1/circle/1/calendar,TypeError: Cannot destructure property 'title' of 'req.nody' as it is undefined.
+16:14:27,/api/profil/1/circle/1/calendar,TypeError: Cannot destructure property 'title' of 'req.nody' as it is undefined.
+16:15:09,/api/profil/1/circle/1/calendar,TypeError: Cannot destructure property 'title' of 'req.nody' as it is undefined.
+16:15:50,/api/profil/1/circle/1/calendar,TypeError: Cannot destructure property 'title' of 'req.nody' as it is undefined.
+16:16:20,/api/profil/1/circle/1/calendar,error: syntax error at or near "start"
+16:17:07,/api/profil/1/circle/1/calendar,error: syntax error at or near "start"
+16:17:54,/api/profil/1/circle/1/calendar,error: syntax error at or near "start"
+16:21:15,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:23:33,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:25:04,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:25:13,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:27:00,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:27:30,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:27:34,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:27:35,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:28:15,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:29:18,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:29:21,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:30:19,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:30:24,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:30:56,/api/profil/16/circle/1/calendar,error: INSERT has more expressions than target columns
+16:31:08,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "blue"
+16:34:50,/api/profil/16/circle/1/calendar,error: null value in column "title" of relation "event" violates not-null constraint
+16:35:22,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:35:38,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:35:40,/api/profil/16/circle/1/calendar,error: syntax error at or near "start"
+16:35:56,/api/profil/16/circle/1/calendar,error: null value in column "title" of relation "event" violates not-null constraint
+16:36:33,/api/profil/16/circle/1/calendar,error: null value in column "title" of relation "event" violates not-null constraint
+16:37:07,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:37:43,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:38:06,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:39:37,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:40:21,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:40:25,/api/profil/16/circle/1/calendar,error: invalid input syntax for type boolean: "16"
+16:40:34,/api/profil/16/circle/1/calendar,error: invalid input syntax for type integer: "true"
+16:42:54,/api/profil/16/circle/1/calendar,error: invalid input syntax for type integer: "true"
