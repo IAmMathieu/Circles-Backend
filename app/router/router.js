@@ -21,7 +21,7 @@ router
   .patch(jwbtoken.getAuthorization, routerWrapper(userController.patchUser))
   .delete(jwbtoken.getAuthorization, routerWrapper(userController.deletUser));
 router.get(
-  "/api/profil/:id/circles",
+  "/api/profil/:id(\\d+)/circles",
   jwbtoken.getAuthorization,
   routerWrapper(circleController.getCirclesForUser)
 );
@@ -33,19 +33,18 @@ router.post(
   routerWrapper(circleController.createCircle)
 );
 router.post(
-  "/api/circle/new/:user_id",
+  "/api/circle/new/:user_id(\\d+)",
   jwbtoken.getAuthorization,
   routerWrapper(circleController.addUserToCircle)
 );
-
 router.delete(
-  "/api/circle/remove/:user_id",
+  "/api/circle/remove/:user_id(\\d+)",
   jwbtoken.getAuthorization,
   routerWrapper(circleController.removeUserFromCircle)
 );
 
 router
-  .route("/api/circle/:id")
+  .route("/api/circle/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(circleController.getCircle))
   .patch(
     jwbtoken.getAuthorization,
@@ -58,16 +57,16 @@ router
 
 //Controller Calendar
 router
-  .route("/api/circle/:id/calendar")
-  .get(routerWrapper())
-  .post(routerWrapper())
-  .patch(routerWrapper())
-  .delete(routerWrapper());
+  .route("/api/circle/:id(\\d+)/event")
+  .get(routerWrapper()) // calendar_id req.body?
+  .post(routerWrapper()) // calendar_id req.body?
+  .patch(routerWrapper()) // calendar_id req.body?
+  .delete(routerWrapper()); // calendar_id req.body?
 
 // Controller Chat
-router.get("/api/circle/:id/chat/", routerWrapper());
+router.get("/api/circle/:id(\\d+)/event/", routerWrapper());
 router
-  .route("/api/circle/:id/chat/:userid")
+  .route("/api/circle/:id/message/:userid") // req.body >> content
   .post(routerWrapper())
   .patch(routerWrapper())
   .delete(routerWrapper());
