@@ -66,3 +66,20 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhd
 {
     "circle_id": 9
 }
+
+###
+POST http://localhost:1337/api/profil/16/circle/1/calendar
+Content-Type: application/json
+User-Agent: rest-client
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY1MTgyNjMyNiwiZXhwIjoxNjUxODI5OTI2fQ.q3QaBrtcEMAKc_dsfRuQwvKmYGt3EI9NcLHO-HnpU1Q
+
+{
+    "title": "anniversaire Pepa ",
+    "start":"2022-05-07",
+    "end":"2022-05-07",
+    "description":"Petite soirée en prévision de l'anniv de notre cher Pepa",
+    "allday": true ,
+    "user_id" : 16,
+    "color" : "blue"
+    
+}
