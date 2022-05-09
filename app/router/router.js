@@ -15,6 +15,13 @@ const calendarController = require("../controllers/calendarController");
 // Controller User
 router.post("/api/login", routerWrapper(userController.getUser));
 router.post("/api/register", routerWrapper(userController.createUser));
+
+router.get(
+  "/api/dashboard/:id(\\d+)",
+  jwbtoken.getAuthorization,
+  routerWrapper(userController.getAllInfosFromUserId)
+);
+
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))

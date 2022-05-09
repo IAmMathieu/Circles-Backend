@@ -1,6 +1,5 @@
 const { generate } = require("../services/uniqueCodeGenerator");
 const circleDatamapper = require("../datamapper/circleDatamapper");
-const jwbtoken = require("../middlewares/jwtMiddleware");
 
 const circleController = {
   async getCircle(req, res) {

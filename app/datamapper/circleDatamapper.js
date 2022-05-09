@@ -47,8 +47,11 @@ const circleDatamapper = {
     return updatedCircle.rows[0];
   },
 
-  async deleteCircle(id) {
-    const circle = await client.query("DELETE FROM circle WHERE id = $1", [id]);
+  async deleteCircle(circleId, userId) {
+    const circle = await client.query(
+      "DELETE FROM circle WHERE circle.id = $1 AND circle.user_id = $2",
+      [circleId, userId]
+    );
 
     return !!circle.rowCount;
   },

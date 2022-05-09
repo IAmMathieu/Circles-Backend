@@ -7,7 +7,6 @@ const userController = {
     const { email } = req.body;
     console.log("Email: " + email);
     const user = await userDataMapper.getUser(email);
-    console.log(user);
     if (!user) {
       res.status(401).send("Email does not exist");
     } else {
@@ -75,10 +74,17 @@ const userController = {
     const userId = req.params.id;
     const deleteUser = await userDataMapper.deleteUser(userId);
     if (deleteUser) {
-      res.send("User is deleted");
+      res.send("User successfully deleted");
     } else {
       res.send("Error, user can't be deleted ");
     }
+  },
+
+  async getAllInfosFromUserId(req, res) {
+    const userId = req.body.id;
+    const data = await userDataMapper.getAllInfosFromUserId(userId);
+
+    res.json(data);
   },
 };
 
