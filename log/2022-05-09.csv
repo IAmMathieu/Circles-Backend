@@ -5,3 +5,5 @@
 09:43:26,/api/dashboard/16,TypeError: userCircles is not iterable
 09:44:14,/api/dashboard/16,TypeError: userCircles is not iterable
 09:46:40,/api/dashboard/16,TypeError: userCircles is not iterable
+11:27:05,/api/login,error: too many connections for role "qctnrecnxjtaro"
+11:28:36,/api/login,error: too many connections for role "qctnrecnxjtaro"
