@@ -20,11 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 //   next();
 // });
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
+  credentials: true,
+  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+};
+
+app.use(cors(corsOptions));
 app.use(router);
 
 app.listen(port, () => {
