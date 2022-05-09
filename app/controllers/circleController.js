@@ -1,6 +1,5 @@
 const { generate } = require("../services/uniqueCodeGenerator");
 const circleDatamapper = require("../datamapper/circleDatamapper");
-const jwbtoken = require("../middlewares/jwtMiddleware");
 
 const circleController = {
   async getCircle(req, res) {
@@ -73,6 +72,14 @@ const circleController = {
     } else {
       res.status(400).send("Bad request or incorrect informations");
     }
+  },
+
+  async getCirclesForUser(req, res) {
+    const userId = req.params.id;
+
+    const circles = await circleDatamapper.getCirclesForUser(userId);
+
+    res.json(circles);
   },
 };
 
