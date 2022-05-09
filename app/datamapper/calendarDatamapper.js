@@ -34,7 +34,27 @@ const calendarDataMapper = {
         }
         const allEvent = await client.query(query);
         return allEvent.rows;
-    }
+    },
+    async oneEvent (id){
+        const query = {
+            text : `SELECT * 
+                FROM "event"
+                WHERE "event".id = $1`,
+            values : [id]
+        }
+        const oneEvent = await client.query(query);
+        return oneEvent.rows[0];
+    },
+
+    async deleteEvent (id){
+        const query = {
+            text : `DELETE FROM "event"
+                    WHERE "event".id = $1`,
+            values : [id]
+        }
+        return await client.query(query);
+    },
+
 
 };
 

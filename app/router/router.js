@@ -51,7 +51,7 @@ router
   .route("/api/profil/:id/circle/:circle_id/calendar/:event_id")
   .get(jwbtoken.getAuthorization,routerWrapper(calendarController.oneEvent))
   .patch(jwbtoken.getAuthorization,routerWrapper(calendarController.patchEvent))
-  .delete(jwbtoken.getAuthorization,routerWrapper());
+  .delete(jwbtoken.getAuthorization,routerWrapper(calendarController.deleteEvent));
 
 // Controller Chat
 router.get("/api/circle/:id/chat/", routerWrapper());
