@@ -21,9 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 // });
 
 const corsOptions = {
-  origin: ["*"],
+  origin: "*",
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
   credentials: true,
+  preflightContinue: false,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };
 
