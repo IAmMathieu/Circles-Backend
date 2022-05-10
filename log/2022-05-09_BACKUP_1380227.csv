@@ -1,0 +1,26 @@
+<<<<<<< HEAD
+09:39:47,/api/dashboard,TypeError: Cannot read properties of undefined (reading 'id')
+09:40:37,/api/dashboard,TypeError: Cannot read properties of undefined (reading 'id')
+09:41:15,/api/dashboard,TypeError: Cannot read properties of undefined (reading 'id')
+09:42:51,/api/dashboard/16,TypeError: Cannot read properties of undefined (reading 'params')
+09:43:26,/api/dashboard/16,TypeError: userCircles is not iterable
+09:44:14,/api/dashboard/16,TypeError: userCircles is not iterable
+09:46:40,/api/dashboard/16,TypeError: userCircles is not iterable
+=======
+10:44:08,/api/profil/16/circle/1/calendar/8,TypeError: method is not a function
+10:44:37,/api/profil/16/circle/1/calendar/8,error: update or delete on table "event" violates foreign key constraint "calendar_event_id_fkey" on table "calendar"
+10:47:02,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "ON"
+10:47:08,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "ON"
+10:47:48,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "ON"
+10:47:52,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "CASCADE"
+10:47:59,/api/profil/16/circle/1/calendar/8,error: update or delete on table "event" violates foreign key constraint "calendar_event_id_fkey" on table "calendar"
+10:49:18,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "ON"
+10:49:30,/api/profil/16/circle/1/calendar/8,error: syntax error at or near "ON"
+13:09:41,/api/login,Error: secretOrPrivateKey must have a value
+13:09:51,/api/login,Error: secretOrPrivateKey must have a value
+13:39:07,/api/login,Error: secretOrPrivateKey must have a value
+13:40:31,/api/login,Error: secretOrPrivateKey must have a value
+13:41:22,/api/login,Error: secretOrPrivateKey must have a value
+13:42:57,/api/login,Error: secretOrPrivateKey must have a value
+13:44:46,/api/login,Error: secretOrPrivateKey must have a value
+>>>>>>> feature/calendar

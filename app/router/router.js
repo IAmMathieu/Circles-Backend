@@ -64,19 +64,21 @@ router
 
 //Controller Calendar
 router
-  .route("/api/circle/:id(\\d+)/event")
-  .get(routerWrapper()) // calendar_id req.body?
-  .post(routerWrapper()) // calendar_id req.body?
-  .patch(routerWrapper()) // calendar_id req.body?
-  .delete(routerWrapper()); // calendar_id req.body?
+  .route("/api/profil/:id/circle/:circle_id/calendar")
+  .get(jwbtoken.getAuthorization, routerWrapper(calendarController.allEvent))
+  .post(jwbtoken.getAuthorization, routerWrapper(calendarController.addEvent));
 
-// Controller Chat
-router.get("/api/circle/:id(\\d+)/event/", routerWrapper());
 router
-  .route("/api/circle/:id/message/:userid") // req.body >> content
-  .post(routerWrapper())
-  .patch(routerWrapper())
-  .delete(routerWrapper());
+  .route("/api/profil/:id/circle/:circle_id/calendar/:event_id")
+  .get(jwbtoken.getAuthorization, routerWrapper(calendarController.oneEvent))
+  .patch(
+    jwbtoken.getAuthorization,
+    routerWrapper(calendarController.patchEvent)
+  )
+  .delete(
+    jwbtoken.getAuthorization,
+    routerWrapper(calendarController.deleteEvent)
+  );
 
 // Gestion user non authentifié - url non reconnu
 app.use(function (err, req, res, next) {
