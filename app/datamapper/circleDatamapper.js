@@ -28,13 +28,6 @@ const circleDatamapper = {
 
     const circle = await client.query(query);
 
-    if (circle) {
-      circleDatamapper.addUserToCircle(
-        circle.rows[0].user_id,
-        circle.rows[0].unique_code
-      );
-    }
-
     return circle.rows[0];
   },
 
@@ -78,7 +71,7 @@ const circleDatamapper = {
 
   async getCirclesForUser(userId) {
     const query = {
-      text: `SELECT *
+      text: `SELECT circle_id
       FROM "user_belongsTo_circle"
       JOIN "user" ON user_id = "user".id
       JOIN "circle" ON circle_id = circle.id

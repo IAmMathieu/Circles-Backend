@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // });
 
 const corsOptions = {
-  origin: ["*", "91.86.45.85"],
+  origin: ["*"],
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
   credentials: true,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
