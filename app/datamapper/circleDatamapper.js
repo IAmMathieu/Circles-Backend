@@ -15,7 +15,7 @@ const circleDatamapper = {
 
   async createCircle(circleData) {
     const query = {
-      text: `INSERT INTO circle(name, description, color, img_url, user_id, unique_code) VALUES ($1, $2, $3, $4, $5, $6)`,
+      text: `INSERT INTO circle(name, description, color, img_url, user_id, unique_code) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       values: [
         circleData.name,
         circleData.description,
@@ -27,6 +27,13 @@ const circleDatamapper = {
     };
 
     const circle = await client.query(query);
+
+    if (circle) {
+      circleDatamapper.addUserToCircle(
+        circle.rows[0].user_id,
+        circle.rows[0].unique_code
+      );
+    }
 
     return circle.rows[0];
   },
@@ -71,7 +78,7 @@ const circleDatamapper = {
 
   async getCirclesForUser(userId) {
     const query = {
-      text: `SELECT circle_id
+      text: `SELECT *
       FROM "user_belongsTo_circle"
       JOIN "user" ON user_id = "user".id
       JOIN "circle" ON circle_id = circle.id
