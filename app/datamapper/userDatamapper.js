@@ -95,7 +95,7 @@ const userDataMapper = {
 
     for (circles of userCircles.rows) {
       const query = {
-        text: `SELECT "circle".id as circle_id, json_agg( distinct "event") AS events, json_agg( distinct "message") AS messages
+        text: `SELECT "circle".id as circle_id, "circle".name, "circle".description, "circle".color, "circle".img_url, "circle".user_id AS "circle_admin", "circle".unique_code, json_agg( distinct "event") AS events, json_agg( distinct "message") AS messages
         FROM (SELECT "circle".id as circle_id, "event".* 
             FROM "calendar"
             JOIN "event" ON event_id = "event".id
