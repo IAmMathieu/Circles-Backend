@@ -15,7 +15,7 @@ const circleDatamapper = {
 
   async createCircle(circleData) {
     const query = {
-      text: `INSERT INTO circle(name, description, color, img_url, user_id, unique_code) VALUES ($1, $2, $3, $4, $5, $6)`,
+      text: `INSERT INTO circle(name, description, color, img_url, user_id, unique_code) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       values: [
         circleData.name,
         circleData.description,
