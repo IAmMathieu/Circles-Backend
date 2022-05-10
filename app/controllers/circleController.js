@@ -19,7 +19,6 @@ const circleController = {
       user_id: req.body.user_id,
       unique_code: await generate(),
     };
-    console.log(circleData);
     const circle = await circleDatamapper.createCircle(circleData);
 
     res.json(circle);

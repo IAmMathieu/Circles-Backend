@@ -81,7 +81,7 @@ const userController = {
   },
 
   async getAllInfosFromUserId(req, res) {
-    const userId = req.body.id;
+    const userId = req.params.id;
     const data = await userDataMapper.getAllInfosFromUserId(userId);
 
     res.json(data);

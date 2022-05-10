@@ -17,7 +17,7 @@ router.post("/api/login", routerWrapper(userController.getUser));
 router.post("/api/register", routerWrapper(userController.createUser));
 
 router.get(
-  "/api/dashboard/",
+  "/api/dashboard/:id(\\d+)",
   jwbtoken.getAuthorization,
   routerWrapper(userController.getAllInfosFromUserId)
 );
