@@ -5,7 +5,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const jwbtoken = {
   jwtOptions: {
     algorithm: "HS256",
-    expiresIn: "1h",
+    expiresIn: "1d",
   },
 
   generateAccessToken(id) {

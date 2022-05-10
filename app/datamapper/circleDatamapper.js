@@ -75,7 +75,7 @@ const circleDatamapper = {
 
   async getCirclesForUser(userId) {
     const query = {
-      text: `SELECT circle_id
+      text: `SELECT json_agg(circle.*) AS circles
       FROM "user_belongsTo_circle"
       JOIN "user" ON user_id = "user".id
       JOIN "circle" ON circle_id = circle.id
