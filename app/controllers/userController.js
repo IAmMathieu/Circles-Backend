@@ -33,7 +33,9 @@ const userController = {
   async getUserInfo(req, res) {
     const userId = req.params.id;
     const user = await userDataMapper.getUserInfo(userId);
-    res.json(user);
+    if (user) {
+      res.json(user);
+    }
   },
 
   async createUser(req, res) {
@@ -49,7 +51,7 @@ const userController = {
     createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
     if (createdUser) {
       res.json(createdUser);
-    }
+    } else res.status(400).send("Bad Request");
   },
 
   async patchUser(req, res) {
