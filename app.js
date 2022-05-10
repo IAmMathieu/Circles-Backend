@@ -10,16 +10,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Cross Origin middleware -- à adapter
-// app.use(function (_, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
-
 const corsOptions = {
   origin: "*",
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",

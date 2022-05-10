@@ -28,6 +28,10 @@ const circleDatamapper = {
 
     const circle = await client.query(query);
 
+    if (circle) {
+      circleDatamapper.addUserToCircle(circle.user_id, circle.id);
+    }
+
     return circle.rows[0];
   },
 
