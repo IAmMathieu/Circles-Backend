@@ -4,3 +4,4 @@ squitch.conf
 tokenTestInfo
 test.http
 test.sql
+log
