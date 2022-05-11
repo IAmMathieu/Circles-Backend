@@ -56,23 +56,26 @@ const userController = {
 
   async patchUser(req, res) {
     const userId = req.params.id;
-    const { firstname, lastname, email, password, birthdate, img_url } =
-      req.body;
 
-    password = await bcrypt.hash(password, Number(process.env.saltRounds));
-
-    const patchUser = await userDataMapper.patchUser(
-      userId,
-      firstname,
-      lastname,
-      email,
-      password,
-      birthdate,
-      img_url
+    req.body.oldpassword = await bcrypt.hash(
+      req.body.oldpassword,
+      Number(process.env.saltRounds)
     );
 
-    if (patchUser) {
-      res.status(201).send("User is changed");
+    const user = await userDataMapper.getUserById(userId, req.body.oldpassword);
+
+    if (user) {
+      req.body.password = await bcrypt.hash(
+        req.body.password,
+        Number(process.env.saltRounds)
+      );
+      const patchUser = await userDataMapper.patchUser(userId, req.body);
+
+      if (patchUser) {
+        res.status(201).send("User is changed");
+      }
+    } else {
+      res.status(502).send("User not found in database.");
     }
   },
   async deletUser(req, res) {

@@ -13,6 +13,18 @@ const userDataMapper = {
     return user.rows[0];
   },
 
+  async getUserById(id, password) {
+    const query = {
+      text: `SELECT "user"(id, firstname, lastname, surname, email, birthdate, img_url)
+                FROM "user"
+                WHERE "user".id=$1 AND "user".password=$2`,
+      values: [id, password],
+    };
+
+    const user = await client.query(query);
+    return user.rows[0];
+  },
+
   //Find a user by id
   async getUserInfo(id) {
     const query = {
@@ -45,27 +57,20 @@ const userDataMapper = {
   },
 
   //Patch a user
-  async patchUser(
-    id,
-    firstname,
-    lastname,
-    email,
-    password,
-    birthdate,
-    img_url
-  ) {
-    const query = {
-      text: `UPDATE "user" 
-              SET "firstname" = $1,
-              "lastname" = $2,
-              "email" = $3,
-              "password" = $4,
-              "birthdate" = $5,
-              "img_url" = $6
-              WHERE "user".id = $7 RETURNING *`,
-      values: [firstname, lastname, email, password, birthdate, img_url, id],
-    };
-    return await client.query(query);
+  async patchUser(id, data) {
+    const fields = Object.keys(data).map(
+      (prop, index) => `"${prop}" = $${index + 1},`
+    );
+    const values = Object.values(data);
+
+    const updatedUser = await client.query(
+      `UPDATE "user" SET ${fields} WHERE id = $${
+        fields.length + 1
+      } RETURNING *`,
+      [...values, id]
+    );
+
+    return updatedUser.rows[0];
   },
 
   //Delete a user
