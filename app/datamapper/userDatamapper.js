@@ -81,40 +81,30 @@ const userDataMapper = {
 
   async getAllInfosFromUserId(userId) {
     const query = {
-      text: `SELECT "circle".id
-      FROM "user_belongsTo_circle"
-      JOIN "user" ON user_id = "user".id
-      JOIN "circle" on circle_id = "circle".id
-      WHERE "user".id = $1`,
+      text: `SELECT DISTINCT 
+      "circle".id AS circle_id,
+      "circle".name,
+      "circle".description,
+      "circle".color,
+      "circle".user_id AS "admin",
+      "circle".unique_code,
+      events,
+      messages
+    FROM "circle"
+    LEFT JOIN "calendar_of_circle" ON "calendar_of_circle".circle_id = "circle".id
+    LEFT JOIN "chat_of_circle" ON "chat_of_circle".circle_id = "circle".id
+    WHERE "circle".id = ANY (SELECT "circle".id
+          FROM "user_belongsTo_circle"
+          JOIN "user" ON user_id = "user".id
+          JOIN "circle" on circle_id = "circle".id
+          WHERE "user".id = $1)
+    ORDER BY "circle".id`,
       values: [userId],
     };
 
-    const userCircles = await client.query(query);
+    const data = await client.query(query);
 
-    const allInfo = [];
-
-    for (circles of userCircles.rows) {
-      const query = {
-        text: `SELECT "circle".id as circle_id, "circle".name, "circle".description, "circle".color, "circle".img_url, "circle".user_id AS "circle_admin", "circle".unique_code, json_agg( distinct "event") AS events, json_agg( distinct "message") AS messages
-        FROM (SELECT "circle".id as circle_id, "event".* 
-            FROM "calendar"
-            JOIN "event" ON event_id = "event".id
-            JOIN "circle" ON circle_id = "circle".id
-            WHERE "circle".id = $1) "event", (SELECT "circle".id as circle_id, "message".* 
-            FROM "chat"
-            JOIN "message" ON message_id = "message".id
-            JOIN "circle" ON circle_id = "circle".id
-            WHERE "circle".id = $1) "message", "circle"
-        WHERE "circle".id = $1
-        GROUP BY "circle".id`,
-        values: [circles.id],
-      };
-
-      const data = await client.query(query);
-
-      allInfo.push(data.rows[0]);
-    }
-    return allInfo;
+    return data.rows;
   },
 };
 

@@ -5,3 +5,4 @@ tokenTestInfo
 *.http
 test.sql
 log
+SQL_update.sql

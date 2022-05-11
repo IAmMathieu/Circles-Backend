@@ -58,6 +58,9 @@ const userController = {
     const userId = req.params.id;
     const { firstname, lastname, email, password, birthdate, img_url } =
       req.body;
+
+    password = await bcrypt.hash(password, Number(process.env.saltRounds));
+
     const patchUser = await userDataMapper.patchUser(
       userId,
       firstname,
