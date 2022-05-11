@@ -71,10 +71,14 @@ const userController = {
 
       if (isPasswordCorrect) {
         delete req.body.oldpassword;
-        req.body.password = await bcrypt.hash(
-          req.body.password,
-          Number(process.env.saltRounds)
-        );
+
+        if (req.body.password) {
+          req.body.password = await bcrypt.hash(
+            req.body.password,
+            Number(process.env.saltRounds)
+          );
+        }
+
         const patchUser = await userDataMapper.patchUser(userId, req.body);
 
         if (patchUser) {
