@@ -65,6 +65,7 @@ const userController = {
     const user = await userDataMapper.getUserById(userId, req.body.oldpassword);
 
     if (user) {
+      delete req.body.oldpassword;
       req.body.password = await bcrypt.hash(
         req.body.password,
         Number(process.env.saltRounds)
