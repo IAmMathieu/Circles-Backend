@@ -56,6 +56,7 @@ const userController = {
   async patchUser(req, res) {
     const userId = req.params.id;
 
+    // Check if user exist
     const user = await userDataMapper.getUserById(userId);
 
     if (!user) {
