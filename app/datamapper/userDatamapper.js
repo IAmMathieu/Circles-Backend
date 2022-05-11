@@ -13,12 +13,12 @@ const userDataMapper = {
     return user.rows[0];
   },
 
-  async getUserById(id, password) {
+  async getUserById(id) {
     const query = {
-      text: `SELECT "user".id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url
+      text: `SELECT *
                 FROM "user"
-                WHERE "user".id=$1 AND "user".password=$2`,
-      values: [id, password],
+                WHERE "user".id=$1`,
+      values: [id],
     };
 
     const user = await client.query(query);
@@ -59,8 +59,10 @@ const userDataMapper = {
   //Patch a user
   async patchUser(id, data) {
     const fields = Object.keys(data).map(
-      (prop, index) => `"${prop}" = $${index + 1},`
+      (prop, index) => `"${prop}" = $${index + 1}`
     );
+
+    console.log(fields);
     const values = Object.values(data);
 
     const updatedUser = await client.query(

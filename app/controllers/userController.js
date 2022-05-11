@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const userController = {
   async getUser(req, res) {
     const { email } = req.body;
-    console.log("Email: " + email);
     const user = await userDataMapper.getUser(email);
     if (!user) {
       res.status(401).send("Email does not exist");
@@ -57,28 +56,36 @@ const userController = {
   async patchUser(req, res) {
     const userId = req.params.id;
 
-    req.body.oldpassword = await bcrypt.hash(
-      req.body.oldpassword,
-      Number(process.env.saltRounds)
-    );
+    const user = await userDataMapper.getUserById(userId);
 
-    const user = await userDataMapper.getUserById(userId, req.body.oldpassword);
-
-    if (user) {
-      delete req.body.oldpassword;
-      req.body.password = await bcrypt.hash(
-        req.body.password,
-        Number(process.env.saltRounds)
-      );
-      const patchUser = await userDataMapper.patchUser(userId, req.body);
-
-      if (patchUser) {
-        res.status(201).send("User is changed");
-      }
+    if (!user) {
+      res.status(401).send("No User with this id in database ");
     } else {
-      res.status(502).send("User not found in database.");
+      const oldpassword = req.body.oldpassword;
+      const fetchPassword = user.password;
+
+      const isPasswordCorrect = await bcrypt.compare(
+        oldpassword,
+        fetchPassword
+      );
+
+      if (isPasswordCorrect) {
+        delete req.body.oldpassword;
+        req.body.password = await bcrypt.hash(
+          req.body.password,
+          Number(process.env.saltRounds)
+        );
+        const patchUser = await userDataMapper.patchUser(userId, req.body);
+
+        if (patchUser) {
+          res.status(201).send("User is changed");
+        }
+      } else {
+        res.status(502).send("User not found in database.");
+      }
     }
   },
+
   async deletUser(req, res) {
     const userId = req.params.id;
     const deleteUser = await userDataMapper.deleteUser(userId);
