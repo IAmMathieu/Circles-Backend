@@ -3,9 +3,20 @@ const client = require("../config/database");
 const circleDatamapper = {
   async getCircle(id) {
     const query = {
-      text: `SELECT name, description, color, img_url, unique_code
-                FROM "circle"
-                WHERE "circle".id = $1`,
+      text: `SELECT DISTINCT 
+      "circle".id AS circle_id,
+      "circle".name,
+      "circle".description,
+      "circle".color,
+      "circle".user_id AS "admin",
+      "circle".unique_code,
+      events,
+      messages
+    FROM "circle"
+    LEFT JOIN "calendar_of_circle" ON "calendar_of_circle".circle_id = "circle".id
+    LEFT JOIN "chat_of_circle" ON "chat_of_circle".circle_id = "circle".id
+    WHERE "circle".id = $1
+    ORDER BY "circle".id`,
       values: [id],
     };
 
