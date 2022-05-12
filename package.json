@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "abbrev": "^1.1.1",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -27,6 +28,5 @@
   "bugs": {
     "url": "https://github.com/O-clock-Atome/projet-5-circles-back/issues"
   },
-  "homepage": "https://github.com/O-clock-Atome/projet-5-circles-back#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/O-clock-Atome/projet-5-circles-back#readme"
 }

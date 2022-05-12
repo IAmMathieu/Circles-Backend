@@ -1,6 +1,7 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
+const axios = require("axios").default;
 
 const userController = {
   async getUser(req, res) {
@@ -45,6 +46,13 @@ const userController = {
       userPassword,
       Number(process.env.saltRounds)
     );
+
+    axios
+      .get("https://randomuser.me/api/")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log("unable to fetch"));
     const createdUser = await userDataMapper.createUser(userData);
 
     createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
