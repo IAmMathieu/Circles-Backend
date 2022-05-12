@@ -15,7 +15,7 @@ const circleController = {
       name: req.body.name,
       description: req.body.description,
       color: req.body.color,
-      img_url: req.body.img_url,
+      img_url: "https://picsum.photos/450/300",
       user_id: req.body.user_id,
       unique_code: await generate(),
     };
