@@ -10,7 +10,7 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const circleController = require("../controllers/circleController");
 const chatController = require("../controllers/chatController");
-const calendarController = require("../controllers/calendarController");
+const eventController = require("../controllers/eventController");
 
 // Controller User
 router.post("/api/login", routerWrapper(userController.getUser));
@@ -64,20 +64,17 @@ router
 
 //Controller Calendar
 router
-  .route("/api/profil/:id/circle/:circle_id/calendar")
-  .get(jwbtoken.getAuthorization, routerWrapper(calendarController.allEvent))
-  .post(jwbtoken.getAuthorization, routerWrapper(calendarController.addEvent));
+  .route("/api/circle/:id(\\d+)/event")
+  .get(jwbtoken.getAuthorization, routerWrapper(eventController.allEvent))
+  .post(jwbtoken.getAuthorization, routerWrapper(eventController.addEvent));
 
 router
-  .route("/api/profil/:id/circle/:circle_id/calendar/:event_id")
-  .get(jwbtoken.getAuthorization, routerWrapper(calendarController.oneEvent))
-  .patch(
-    jwbtoken.getAuthorization,
-    routerWrapper(calendarController.patchEvent)
-  )
+  .route("/api/circle/:circle_id(\\d+)/event/:event_id(\\d+)")
+  .get(jwbtoken.getAuthorization, routerWrapper(eventController.oneEvent))
+  .patch(jwbtoken.getAuthorization, routerWrapper(eventController.patchEvent))
   .delete(
     jwbtoken.getAuthorization,
-    routerWrapper(calendarController.deleteEvent)
+    routerWrapper(eventController.deleteEvent)
   );
 
 // Gestion user non authentifié - url non reconnu

@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const client = require("../config/database");
 
 const circleDatamapper = {
@@ -10,13 +11,13 @@ const circleDatamapper = {
       "circle".color,
       "circle".user_id AS "admin",
       "circle".unique_code,
-      events,
-      messages
+      jsonb_agg(DISTINCT "event".*) AS events,
+      jsonb_agg(DISTINCT "message".*) AS messages
     FROM "circle"
-    LEFT JOIN "calendar_of_circle" ON "calendar_of_circle".circle_id = "circle".id
-    LEFT JOIN "chat_of_circle" ON "chat_of_circle".circle_id = "circle".id
+    LEFT JOIN "event" ON "event".circle_id = "circle".id
+    LEFT JOIN "message" ON "message".circle_id = "circle".id
     WHERE "circle".id = $1
-    ORDER BY "circle".id`,
+    GROUP BY "circle".id`,
       values: [id],
     };
 
@@ -39,8 +40,11 @@ const circleDatamapper = {
 
     const circle = await client.query(query);
 
-    if (circle) {
-      circleDatamapper.addUserToCircle(circle.user_id, circle.id);
+    if (circle.rows[0]) {
+      circleDatamapper.addUserToCircle(
+        circle.rows[0].user_id,
+        circle.rows[0].unique_code
+      );
     }
 
     return circle.rows[0];
@@ -87,7 +91,7 @@ const circleDatamapper = {
   async getCirclesForUser(userId) {
     const query = {
       text: `SELECT json_agg(circle.*) AS circles
-      FROM "user_belongsTo_circle"
+      FROM "circle_has_user"
       JOIN "user" ON user_id = "user".id
       JOIN "circle" ON circle_id = circle.id
       WHERE "user".id = $1`,
@@ -102,7 +106,7 @@ const circleDatamapper = {
   async getOneCircleForUser(circleId, userId) {
     const query = {
       text: `SELECT circle_id
-      FROM "user_belongsTo_circle"
+      FROM "circle_has_user"
       JOIN "user" ON user_id = "user".id
       JOIN "circle" ON circle_id = circle.id
       WHERE "circle".id = $1 AND "user".id = $2`,
@@ -115,37 +119,37 @@ const circleDatamapper = {
   },
 
   async addUserToCircle(userId, uniqueCode) {
-    const circleId = (
-      await client.query(
-        "SELECT circle.id FROM circle WHERE unique_code = $1",
-        [uniqueCode]
-      )
-    ).rows[0];
-
-    const getCircle = await circleDatamapper.getOneCircleForUser(
-      circleId.id,
-      userId
+    const circle = await client.query(
+      "SELECT circle.id FROM circle WHERE unique_code = $1",
+      [uniqueCode]
     );
 
-    if (!getCircle) {
-      const query = {
-        text: `INSERT INTO "user_belongsTo_circle"(circle_id, user_id) VALUES ($1, $2) RETURNING *`,
-        values: [circleId.id, userId],
-      };
+    const circleId = circle.rows[0].id;
+    if (!circle) {
+      res.status(502).send("No Circle with this Code.");
+    } else {
+      const getCircle = await circleDatamapper.getOneCircleForUser(
+        circleId,
+        userId
+      );
+      if (!getCircle) {
+        const query = {
+          text: `INSERT INTO "circle_has_user"(circle_id, user_id) VALUES ($1, $2) RETURNING *`,
+          values: [circleId, userId],
+        };
 
-      const circle = await client.query(query);
+        const circle = await client.query(query);
 
-      return circle.rows[0];
+        return circle.rows[0];
+      }
     }
   },
 
   async removeUserFromCircle(userId, circleId) {
     const circle = await client.query(
-      `DELETE FROM "user_belongsTo_circle" WHERE user_id = $1 and circle_id = $2`,
+      `DELETE FROM "circle_has_user" WHERE user_id = $1 and circle_id = $2`,
       [userId, circleId]
     );
-
-    console.log(!!circle.rowCount);
 
     return !!circle.rowCount;
   },

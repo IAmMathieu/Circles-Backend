@@ -41,11 +41,12 @@ const userDataMapper = {
   //Create a user
   async createUser(userData) {
     const query = {
-      text: `INSERT INTO "user" ("firstname","lastname", "email", "password", "birthdate","img_url")
-              VALUES ($1,$2,$3,$4,$5,$6) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".email, "user".birthdate, "user".img_url`,
+      text: `INSERT INTO "user" ("firstname","lastname", "surname", "email", "password", "birthdate","img_url")
+              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url`,
       values: [
         userData.firstname,
         userData.lastname,
+        userData.surname,
         userData.email,
         userData.password,
         userData.birthdate,
@@ -89,23 +90,23 @@ const userDataMapper = {
   async getAllInfosFromUserId(userId) {
     const query = {
       text: `SELECT DISTINCT 
-      "circle".id AS circle_id,
-      "circle".name,
-      "circle".description,
-      "circle".color,
-      "circle".user_id AS "admin",
-      "circle".unique_code,
-      events,
-      messages
-    FROM "circle"
-    LEFT JOIN "calendar_of_circle" ON "calendar_of_circle".circle_id = "circle".id
-    LEFT JOIN "chat_of_circle" ON "chat_of_circle".circle_id = "circle".id
-    WHERE "circle".id = ANY (SELECT "circle".id
-          FROM "user_belongsTo_circle"
-          JOIN "user" ON user_id = "user".id
-          JOIN "circle" on circle_id = "circle".id
-          WHERE "user".id = $1)
-    ORDER BY "circle".id`,
+              "circle".id AS circle_id,
+              "circle".name,
+              "circle".description,
+              "circle".color,
+              "circle".user_id AS "admin",
+              "circle".unique_code,
+              jsonb_agg(DISTINCT "event".*) AS events,
+              jsonb_agg(DISTINCT "message".*) AS messages
+            FROM "circle"
+            LEFT JOIN "event" ON "event".circle_id = "circle".id
+            LEFT JOIN "message" ON "message".circle_id = "circle".id
+            WHERE "circle".id = ANY (SELECT "circle".id
+                          FROM "circle_has_user"
+                          JOIN "user" ON user_id = "user".id
+                          JOIN "circle" on circle_id = "circle".id
+                          WHERE "user".id = $1)
+            GROUP BY "circle".id`,
       values: [userId],
     };
 

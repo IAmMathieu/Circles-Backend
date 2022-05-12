@@ -62,29 +62,31 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      const oldpassword = req.body.oldpassword;
-      const fetchPassword = user.password;
+      if (req.body.password || req.body.email) {
+        const oldpassword = req.body.oldpassword;
+        const fetchPassword = user.password;
 
-      const isPasswordCorrect = await bcrypt.compare(
-        oldpassword,
-        fetchPassword
-      );
+        const isPasswordCorrect = await bcrypt.compare(
+          oldpassword,
+          fetchPassword
+        );
 
-      if (isPasswordCorrect) {
-        delete req.body.oldpassword;
+        if (isPasswordCorrect) {
+          delete req.body.oldpassword;
 
-        if (req.body.password) {
-          req.body.password = await bcrypt.hash(
-            req.body.password,
-            Number(process.env.saltRounds)
-          );
+          if (req.body.password) {
+            req.body.password = await bcrypt.hash(
+              req.body.password,
+              Number(process.env.saltRounds)
+            );
+          }
         }
+      }
 
-        const patchUser = await userDataMapper.patchUser(userId, req.body);
+      const patchUser = await userDataMapper.patchUser(userId, req.body);
 
-        if (patchUser) {
-          res.status(201).send("User is changed");
-        }
+      if (patchUser) {
+        res.status(201).send("User is changed");
       } else {
         res.status(502).send("User not found in database.");
       }

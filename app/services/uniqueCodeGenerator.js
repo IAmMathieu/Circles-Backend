@@ -6,8 +6,6 @@ const uniqueCodeGenerator = {
     const uniqueCode = randomstring.generate(8);
     const circle = await circleDatamapper.getCircleByCode(uniqueCode);
 
-    console.log(circle);
-
     if (circle) {
       uniqueCodeGenerator.generate();
     } else {

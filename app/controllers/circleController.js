@@ -35,10 +35,13 @@ const circleController = {
   async deleteCircle(req, res) {
     const circleId = req.params.id;
 
-    const circle = await circleDatamapper.deleteCircle(circleId, req.body);
+    const circle = await circleDatamapper.deleteCircle(
+      circleId,
+      req.body.user_id
+    );
 
     if (circle) {
-      res.status(204);
+      res.status(200).send("Circle successfully deleted.");
     } else {
       res.status(400).send("Bad request or incorrect informations");
     }
