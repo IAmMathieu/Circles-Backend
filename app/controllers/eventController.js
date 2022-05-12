@@ -2,8 +2,9 @@ const eventDatamapper = require("../datamapper/eventDatamapper");
 
 const eventController = {
   async addEvent(req, res) {
-    const circleId = req.params.id;
-    const addEvent = await eventDatamapper.addEvent(req.body, circleId);
+    const circle = req.body;
+    circle.circle_id = req.params.circle_id;
+    const addEvent = await eventDatamapper.addEvent(circle);
     res.json(addEvent);
   },
 

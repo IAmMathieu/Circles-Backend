@@ -1,22 +1,24 @@
 const client = require("../config/database");
 
 const eventDatamapper = {
-  async addEvent(data, circleId) {
+  async addEvent(circleData) {
     const query = {
       text: `INSERT INTO "event" ("title","start","end","description","allday","user_id", "circle_id", "color")
                     VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
       values: [
-        data.title,
-        data.start,
-        data.end,
-        data.description,
-        data.allday,
-        data.user_id,
-        circleId,
-        data.color,
+        circleData.title,
+        circleData.start,
+        circleData.end,
+        circleData.description,
+        circleData.allday,
+        circleData.user_id,
+        circleData.circle_id,
+        circleData.color,
       ],
     };
-    return await client.query(query).rows[0];
+
+    const circle = await client.query(query);
+    return circle.rows[0];
   },
 
   async patchEvent(data, circleId) {

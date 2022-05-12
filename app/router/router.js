@@ -64,7 +64,7 @@ router
 
 //Controller Calendar
 router
-  .route("/api/circle/:id(\\d+)/event")
+  .route("/api/circle/:circle_id(\\d+)/event")
   .get(jwbtoken.getAuthorization, routerWrapper(eventController.allEvent))
   .post(jwbtoken.getAuthorization, routerWrapper(eventController.addEvent));
 
