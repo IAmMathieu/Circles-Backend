@@ -94,6 +94,7 @@ const userDataMapper = {
               "circle".name,
               "circle".description,
               "circle".color,
+              "circle".img_url,
               "circle".user_id AS "admin",
               "circle".unique_code,
               jsonb_agg(DISTINCT "event".*) AS events,
