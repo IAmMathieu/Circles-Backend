@@ -50,7 +50,7 @@ const userController = {
     axios
       .get("https://randomuser.me/api/")
       .then((response) => {
-        console.log(response);
+        userData.img_url = response.data.results[0].picture.large;
       })
       .catch((err) => console.log("unable to fetch"));
     const createdUser = await userDataMapper.createUser(userData);
