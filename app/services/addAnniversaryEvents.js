@@ -2,11 +2,11 @@ const moment = require("moment-timezone");
 
 const makeAnniversaryEvent = {
   convertBirthdate(birthdate) {
-    let date = moment(birthdate).format("YY-MM-DD");
+    let date = moment(birthdate).format("YYYY-MM-DD");
 
     let [year, month, day] = date.split("-");
 
-    year = moment().format("YY");
+    year = moment().format("YYYY");
 
     const result = [year, month, day].join("-");
 
