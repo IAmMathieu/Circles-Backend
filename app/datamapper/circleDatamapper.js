@@ -5,19 +5,23 @@ const circleDatamapper = {
   async getCircle(id) {
     const query = {
       text: `SELECT DISTINCT 
-      "circle".id AS circle_id,
-      "circle".name,
-      "circle".description,
-      "circle".color,
-      "circle".user_id AS "admin",
-      "circle".unique_code,
-      jsonb_agg(DISTINCT "event".*) AS events,
-      jsonb_agg(DISTINCT "message".*) AS messages
-    FROM "circle"
-    LEFT JOIN "event" ON "event".circle_id = "circle".id
-    LEFT JOIN "message" ON "message".circle_id = "circle".id
-    WHERE "circle".id = $1
-    GROUP BY "circle".id`,
+              "circle".id AS circle_id,
+              "circle".name,
+              "circle".description,
+              "circle".color,
+              "circle".user_id AS "admin_id",
+              "circle".unique_code,
+              "futur_events",
+              COUNT("circle_has_user".user_id) AS users_count,
+              jsonb_agg(DISTINCT "event".*) AS events,
+              jsonb_agg(DISTINCT "message".*) AS messages
+            FROM "circle"
+            LEFT JOIN "events_by_circle" ON "events_by_circle".circle_id = circle.id
+            LEFT JOIN "event" ON "event".circle_id = "circle".id
+            LEFT JOIN "message" ON "message".circle_id = "circle".id
+            JOIN "circle_has_user" ON "circle_has_user".circle_id = "circle".id
+            WHERE "circle".id = $1
+            GROUP BY "circle".id, "futur_events"`,
       values: [id],
     };
 
