@@ -10,19 +10,22 @@ const circleDatamapper = {
               "circle".description,
               "circle".color,
               "circle".img_url,
-              "circle".user_id AS "admin_id",
+              jsonb_agg(DISTINCT "user".*) AS admin,
               "circle".unique_code,
+              "users_of_circle".users_count,
+              "users",
               "futur_events",
-              COUNT("circle_has_user".user_id) AS users_count,
               jsonb_agg(DISTINCT "event".*) AS events,
               jsonb_agg(DISTINCT "message".*) AS messages
             FROM "circle"
+            LEFT JOIN "users_of_circle" ON circle_id = circle.id
             LEFT JOIN "events_by_circle" ON "events_by_circle".circle_id = circle.id
             LEFT JOIN "event" ON "event".circle_id = "circle".id
             LEFT JOIN "message" ON "message".circle_id = "circle".id
+            JOIN "user" ON "circle".user_id = "user".id
             JOIN "circle_has_user" ON "circle_has_user".circle_id = "circle".id
-            WHERE "circle".id = $1
-            GROUP BY "circle".id, "futur_events"`,
+            WHERE "circle".id = $1)
+            GROUP BY "circle".id, "futur_events", "users"`,
       values: [id],
     };
 
