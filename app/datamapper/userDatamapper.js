@@ -109,7 +109,7 @@ const userDataMapper = {
                                   FROM "circle_has_user"
                                   JOIN "user" ON user_id = "user".id
                                   JOIN "circle" on circle_id = "circle".id
-                                  WHERE "user".id = 1)
+                                  WHERE "user".id = $1)
             GROUP BY "circle".id, "futur_events"`,
       values: [userId],
     };
