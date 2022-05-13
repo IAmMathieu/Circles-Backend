@@ -28,7 +28,7 @@ const userDataMapper = {
   //Find a user by id
   async getUserInfo(id) {
     const query = {
-      text: `SELECT firstname, lastname, surname, email, birthdate
+      text: `SELECT firstname, lastname, surname, email, birthdate, img_url
                 FROM "user"
                 WHERE "user".id = $1`,
       values: [id],
@@ -94,6 +94,7 @@ const userDataMapper = {
               "circle".name,
               "circle".description,
               "circle".color,
+              "circle".img_url,
               "circle".user_id AS "admin_id",
               "circle".unique_code,
               "futur_events",

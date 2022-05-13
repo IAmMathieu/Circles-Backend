@@ -9,6 +9,7 @@ const circleDatamapper = {
               "circle".name,
               "circle".description,
               "circle".color,
+              "circle".img_url,
               "circle".user_id AS "admin_id",
               "circle".unique_code,
               "futur_events",
