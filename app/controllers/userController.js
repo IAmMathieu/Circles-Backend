@@ -1,6 +1,7 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
+const { createEvent } = require("../services/addAnniversaryEvents");
 const axios = require("axios").default;
 
 const userController = {
@@ -132,7 +133,7 @@ const userController = {
   async getAllInfosFromUserId(req, res) {
     const userId = req.params.id;
     const data = await userDataMapper.getAllInfosFromUserId(userId);
-
+    createEvent(data);
     res.json(data);
   },
 };

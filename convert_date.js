@@ -1,7 +1,11 @@
-const date = '25/12/2022'
+const moment = require("moment-timezone");
 
-const [day, month, year] = date.split('/');
+const date = "1981-04-07";
 
-const result = [year, month, day].join('-')
+let [year, month, day] = date.split("-");
+
+year = moment().format("YY");
+
+const result = [year, month, day].join("-");
 
 console.log(result);
