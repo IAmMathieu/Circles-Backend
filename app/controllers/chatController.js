@@ -1,6 +1,5 @@
 const chatDatamapper = require("../datamapper/chatDatamapper");
 const usersUtils = require("../services/utils/users");
-const res = require("express/lib/response");
 
 const chatController = {
   async sendMessageToDB(msg, socketId, room) {

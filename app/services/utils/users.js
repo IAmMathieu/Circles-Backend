@@ -5,7 +5,9 @@ const usersUtils = {
   userJoin(socketId, dbId, surname, room) {
     const user = { socketId, dbId, surname, room };
 
-    let findUser = users.find((user) => user.socketId === id);
+    let findUser = users.find(
+      (findUser) => findUser.socketId === user.socketId
+    );
     const index = users.indexOf(findUser);
 
     if (!findUser) {
@@ -13,7 +15,6 @@ const usersUtils = {
     } else {
       users[index] = user;
     }
-    console.log(users);
     return user;
   },
 
