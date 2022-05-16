@@ -16,17 +16,17 @@ const circleDatamapper = {
               "users",
               "futur_events",
               jsonb_agg(DISTINCT "event".*) AS events,
-              jsonb_agg(DISTINCT "message".*) AS messages
+              "messages"
             FROM "circle"
             LEFT JOIN "users_of_circle" ON circle_id = circle.id
             LEFT JOIN "events_by_circle" ON "events_by_circle".circle_id = circle.id
             LEFT JOIN "event" ON "event".circle_id = "circle".id
-            LEFT JOIN "message" ON "message".circle_id = "circle".id
+            LEFT JOIN "message_detail" ON "message_detail".circle_id = "circle".id
             JOIN "user" ON "circle".user_id = "user".id
             JOIN "circle_has_user" ON "circle_has_user".circle_id = "circle".id
             JOIN "admin_of_circle" ON "admin_of_circle".circle_id = circle.id
             WHERE "circle".id = $1
-            GROUP BY "circle".id, "futur_events", "users", "users_of_circle".users_count, "admin"`,
+            GROUP BY "circle".id, "futur_events", "users", "users_of_circle".users_count, "admin", "messages"`,
       values: [id],
     };
 

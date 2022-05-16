@@ -1,5 +1,8 @@
 require("dotenv").config();
 const express = require("express");
+const http = require("http");
+const socketio = require("socket.io");
+const server = http.createServer(app);
 const cors = require("cors");
 const router = require("./app/router/router");
 const port = process.env.PORT || 4242;
@@ -17,6 +20,9 @@ const corsOptions = {
   preflightContinue: false,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };
+
+const io = socketio(server, corsOptions);
+const socketServ = require("./app/services/sockerServer")(io);
 
 app.use(cors(corsOptions));
 app.use(router);
