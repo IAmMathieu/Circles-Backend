@@ -2,12 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
+const app = express();
 const server = http.createServer(app);
 const cors = require("cors");
 const router = require("./app/router/router");
 const port = process.env.PORT || 4242;
-
-const app = express();
 
 app.use(express.static("public"));
 app.use(express.json());
