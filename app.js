@@ -5,7 +5,7 @@ const http = require("http");
 const socketio = require("socket.io");
 const app = express();
 const server = http.createServer(app).listen(
-  app.get(port, () => {
+  app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   })
 );
