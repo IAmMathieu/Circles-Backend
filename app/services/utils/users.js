@@ -1,11 +1,16 @@
+const userController = require("../../controllers/userController");
+
 const users = [];
 
 const usersUtils = {
   // Join user to chat
   userJoin(socketId, dbId, surname, room) {
-    const user = { socketId, dbId, surname, room };
+    const dbUser = userController.getUserInfo(dbId);
+    const img_url = dbUser.img_url;
 
-    let findUser = users.find(
+    const user = { socketId, dbId, surname, img_url, room };
+
+    const findUser = users.find(
       (findUser) => findUser.socketId === user.socketId
     );
     const index = users.indexOf(findUser);
