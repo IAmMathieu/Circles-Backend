@@ -8,7 +8,14 @@ const makeAnniversaryEvent = {
 
     year = moment().format("YYYY");
 
-    const result = [year, month, day].join("-");
+    let result = [year, month, day].join("-");
+
+    const currentDate = moment().tz("Europe/Paris").format("YYYY-MM-DD");
+
+    result =
+      result > currentDate
+        ? result
+        : (result = moment(result).add(1, "y").format("YYYY-MM-DD"));
 
     return result;
   },
