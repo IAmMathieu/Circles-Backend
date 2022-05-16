@@ -47,4 +47,4 @@ const usersUtils = {
   },
 };
 
-module.exports = userUtils;
+module.exports = usersUtils;

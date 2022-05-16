@@ -1,6 +1,6 @@
 const chatController = require("../controllers/chatController");
 const formatMessage = require("./utils/messages");
-const userUtils = require("./utils/users");
+const usersUtils = require("./utils/users");
 
 const botName = "Aleks";
 
@@ -9,7 +9,7 @@ exports = module.exports = function (io) {
     console.log(socket.id);
     socket.on("joinRoom", ({ surname, room }) => {
       console.log(room);
-      const user = userUtils.userJoin(socket.id, surname, room);
+      const user = usersUtils.userJoin(socket.id, surname, room);
 
       socket.join(user.room);
 
@@ -30,13 +30,13 @@ exports = module.exports = function (io) {
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
         room: user.room,
-        users: userUtils.getRoomUsers(user.room),
+        users: usersUtils.getRoomUsers(user.room),
       });
     });
 
     // Listen for chatMessage
     socket.on("chatMessage", (msg) => {
-      const user = userUtils.getCurrentUser(socket.id);
+      const user = usersUtils.getCurrentUser(socket.id);
 
       chatController.sendMessageToDB(msg, socket.id, user.room);
 
@@ -45,7 +45,7 @@ exports = module.exports = function (io) {
 
     // Runs when client disconnects
     socket.on("disconnect", () => {
-      const user = userUtils.userLeave(socket.id);
+      const user = usersUtils.userLeave(socket.id);
 
       if (user) {
         io.to(user.room).emit(
@@ -56,7 +56,7 @@ exports = module.exports = function (io) {
         // Send users and room info
         io.to(user.room).emit("roomUsers", {
           room: user.room,
-          users: userUtils.getRoomUsers(user.room),
+          users: usersUtils.getRoomUsers(user.room),
         });
       }
     });
