@@ -21,7 +21,7 @@ const corsOptions = {
     "https://apocircles.surge.sh",
     "http://91.86.45.85",
     "http://176.159.219.162",
-    "http://78.192.203.12",
+    "http://78.192.203.12:3000",
   ],
   methods: "GET, HEAD, POST, PATCH, DELETE, OPTIONS",
   credentials: true,
