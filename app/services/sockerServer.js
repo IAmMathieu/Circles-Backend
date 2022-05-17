@@ -15,7 +15,7 @@ exports = module.exports = function (io) {
       // Welcome current user
       socket.emit(
         "message",
-        formatMessage(botName, "Welcome to your Circle Chatroom!")
+        formatMessage(botName, botName, "Welcome to your Circle Chatroom!")
       );
 
       // Broadcast when a user connects
@@ -23,7 +23,7 @@ exports = module.exports = function (io) {
         .to(user.room)
         .emit(
           "message",
-          formatMessage(botName, `${user.surname} has joined the chat`)
+          formatMessage(botName, botName, `${user.surname} has joined the chat`)
         );
 
       // Send users and room info
@@ -51,7 +51,7 @@ exports = module.exports = function (io) {
       if (user) {
         io.to(user.room).emit(
           "message",
-          formatMessage(botName, `${user.surname} has left the chat`)
+          formatMessage(botName, botName, `${user.surname} has left the chat`)
         );
 
         // Send users and room info
