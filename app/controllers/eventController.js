@@ -8,6 +8,8 @@ const eventController = {
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
 
+    console.log("Dans le eventController: " + req.body);
+
     const addEvent = await eventDatamapper.addEvent(req.body);
 
     res.json(addEvent);
