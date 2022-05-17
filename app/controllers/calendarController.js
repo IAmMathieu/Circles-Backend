@@ -1,8 +1,12 @@
+const sanitizeHtml  =  require ('sanitize-html') ;
 const calendarDataMapper = require("../datamapper/calendarDatamapper");
 
 const calendarController = {
   async addEvent(req, res) {
     const userId = req.params.id;
+    req.body.title = sanitizeHtml(req.body.title);
+    req.body.description = sanitizeHtml(req.body.description);
+    req.body.color = sanitizeHtml(req.body.color);
     const addEvent = await calendarDataMapper.addEvent(req.body, userId);
     res.json(addEvent);
   },
@@ -10,6 +14,10 @@ const calendarController = {
   async patchEvent(req, res) {
     const userId = req.params.id;
     const eventId = req.params.event_id;
+
+    req.body.title = sanitizeHtml(req.body.title);
+    req.body.description = sanitizeHtml(req.body.description);
+    req.body.color = sanitizeHtml(req.body.color);
 
     const patchEvent = await calendarDataMapper.patchEvent(
       req.body,

@@ -26,7 +26,6 @@ router
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
   .patch(jwbtoken.getAuthorization,routerWrapper(userController.patchUser))
   .delete(jwbtoken.getAuthorization,routerWrapper(userController.deletUser));
-router.get("/api/profil/:id/circles", routerWrapper());
 
 //Controller Circle
 router.post(

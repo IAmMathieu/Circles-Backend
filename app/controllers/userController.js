@@ -1,12 +1,16 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
-const circleController = require("./circleController");
+const sanitizeHtml  =  require ('sanitize-html') ;
+
 
 const userController = {
   async getUser(req, res) {
-    const { email } = req.body;
+    //Sanitize req.body
+    req.body.email = sanitizeHtml(req.body.email)
+    const email  = req.body.email;
     const user = await userDataMapper.getUser(email);
+
     if (!user) {
       res.status(401).send("Email does not exist");
     } else {
@@ -37,7 +41,15 @@ const userController = {
   },
 
   async createUser(req, res) {
-    let userData = req.body;
+    //Sanitize req.body
+    req.body.firstname = sanitizeHtml(req.body.firstname);
+    req.body.lastname = sanitizeHtml(req.body.lastname);
+    req.body.email = sanitizeHtml(req.body.email);
+    req.body.password = sanitizeHtml(req.body.password);
+    req.body.img_url = sanitizeHtml(req.body.img_url);
+
+    const userData = req.body
+
     let userPassword = req.body.password;
     //Hash of password
     userData.password = await bcrypt.hash(
@@ -51,23 +63,56 @@ const userController = {
       res.json(createdUser);
     }
   },
+  
+
+ 
 
   async patchUser(req, res) {
     const userId = req.params.id;
-    const { firstname, lastname, email, password, birthdate, img_url } =
-      req.body;
-    const patchUser = await userDataMapper.patchUser(
-      userId,
-      firstname,
-      lastname,
-      email,
-      password,
-      birthdate,
-      img_url
-    );
 
-    if (patchUser) {
-      res.status(201).send("User is changed");
+    req.body.firstname = sanitizeHtml(req.body.firstname);
+    req.body.lastname = sanitizeHtml(req.body.lastname);
+    req.body.email = sanitizeHtml(req.body.email);
+    req.body.password = sanitizeHtml(req.body.password);
+    req.body.img_url = sanitizeHtml(req.body.img_url);
+    req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
+
+
+
+    // Check if user exist
+    const user = await userDataMapper.getUserById(userId);
+
+    if (!user) {
+      res.status(401).send("No User with this id in database ");
+    } else {
+      if (req.body.password || req.body.email) {
+        const oldpassword = req.body.oldpassword;
+        const fetchPassword = user.password;
+
+        const isPasswordCorrect = await bcrypt.compare(
+          oldpassword,
+          fetchPassword
+        );
+
+        if (isPasswordCorrect) {
+          delete req.body.oldpassword;
+
+          if (req.body.password) {
+            req.body.password = await bcrypt.hash(
+              req.body.password,
+              Number(process.env.saltRounds)
+            );
+          }
+        }
+      }
+
+      const patchUser = await userDataMapper.patchUser(userId, req.body);
+
+      if (patchUser) {
+        res.status(201).send("User is changed");
+      } else {
+        res.status(502).send("User not found in database.");
+      }
     }
   },
 

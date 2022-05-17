@@ -40,7 +40,6 @@ const userDataMapper = {
         userData.img_url,
       ],
     };
-
     return await client.query(query);
   },
 
