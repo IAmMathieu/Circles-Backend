@@ -3,11 +3,13 @@ const eventDatamapper = require("../datamapper/eventDatamapper");
 
 const eventController = {
   async addEvent(req, res) {
-    const circle_id = req.params.id;
+    req.body.circle_id = req.params.circle_id;
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
-    const addEvent = await eventDatamapper.addEvent(req.body, circle_id);
+
+    const addEvent = await eventDatamapper.addEvent(req.body);
+
     res.json(addEvent);
   },
 
