@@ -13,10 +13,17 @@ const circleController = {
 
   async createCircle(req, res) {
     const circleData = {
+<<<<<<< HEAD
       name: req.body.name,
       description: req.body.description,
       color: req.body.color,
       img_url: "https://picsum.photos/450/300",
+=======
+      name:  sanitizeHtml(req.body.name),
+      description: sanitizeHtml(req.body.description),
+      color: sanitizeHtml(req.body.color),
+      img_url: sanitizeHtml(req.body.img_url),
+>>>>>>> f7d536f (rebase main to develop)
       user_id: req.body.user_id,
       unique_code: await generate(),
     };
