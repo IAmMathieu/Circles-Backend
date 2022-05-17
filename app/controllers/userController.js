@@ -1,13 +1,10 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
-<<<<<<< HEAD
 const { createEvent } = require("../services/addAnniversaryEvents");
 const axios = require("axios").default;
-=======
 const sanitizeHtml  =  require ('sanitize-html') ;
 
->>>>>>> develop
 
 const userController = {
   async getUser(req, res) {
@@ -84,8 +81,6 @@ const userController = {
   async patchUser(req, res) {
     const userId = req.params.id;
 
-<<<<<<< HEAD
-=======
     req.body.firstname = sanitizeHtml(req.body.firstname);
     req.body.lastname = sanitizeHtml(req.body.lastname);
     req.body.email = sanitizeHtml(req.body.email);
@@ -93,9 +88,6 @@ const userController = {
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
 
-
-
->>>>>>> develop
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
 
