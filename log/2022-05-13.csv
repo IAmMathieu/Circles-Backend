@@ -1,3 +1,0 @@
-17:19:59,/api/dashboard/1,TypeError: addAnniversaryEvent is not a function
-17:20:25,/api/dashboard/1,TypeError: this.convertBirthdate is not a function
-17:27:09,/api/dashboard/1,error: could not identify an equality operator for type json
