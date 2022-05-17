@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: "*",
-  methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
+  origin: ["*", "91.86.45.85", "https://apocircles.surge.sh"],
+  methods: ["GET","HEAD","POST","PATCH","DELETE","OPTIONS"],
   credentials: true,
   preflightContinue: false,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",

@@ -30,9 +30,10 @@ const makeAnniversaryEvent = {
           start: anniversaryDate,
           end: anniversaryDate,
           color: "#FFB703",
-          title: "Anniversare de " + user.surname,
+          title: "Anniversaire de " + user.surname,
           allday: true,
           description: "Anniversaire de " + user.surname,
+          isLocked: true
         };
 
         elt.events.unshift(anniversary);
