@@ -2,7 +2,7 @@ const chatController = require("../controllers/chatController");
 const formatMessage = require("./utils/messages");
 const usersUtils = require("./utils/users");
 
-const botName = "Aleks";
+const botName = "Jarvis";
 
 exports = module.exports = function (io) {
   io.on("connection", (socket) => {

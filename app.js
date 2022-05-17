@@ -21,11 +21,10 @@ const corsOptions = {
   methods: "GET, HEAD, POST, PATCH, DELETE, OPTIONS",
   credentials: true,
   preflightContinue: false,
-  allowedHeaders:
-    "Content-Type, Authorization, X-Requested-With, Access-Control-Allow-Origin",
+  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };
 
-const io = socketio(server, { cors: { origin: "*" } });
+const io = socketio(server, corsOptions);
 const socketServ = require("./app/services/sockerServer")(io);
 
 app.use(cors(corsOptions));

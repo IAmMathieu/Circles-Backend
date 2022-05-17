@@ -4,7 +4,7 @@ function formatMessage(surname, text) {
   return {
     surname,
     text,
-    time: moment().tz("Europe/Paris").format("HH:mm - DD/MM/YY"),
+    time: moment().tz("Europe/Paris").format(),
   };
 }
 
