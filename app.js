@@ -17,14 +17,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: ["*"],
-  methods: ["GET", "HEAD", "POST", "PATCH", "DELETE", "OPTIONS"],
+  origin: "*",
+  methods: "GET, HEAD, POST, PATCH, DELETE, OPTIONS",
   credentials: true,
   preflightContinue: false,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };
 
-const io = socketio(server, corsOptions);
+const io = socketio(server, { cors: { origin: "*" } });
 const socketServ = require("./app/services/sockerServer")(io);
 
 app.use(cors(corsOptions));
