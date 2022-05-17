@@ -8,7 +8,7 @@ exports = module.exports = function (io) {
   io.on("connection", (socket) => {
     // console.log(socket.id);
     socket.on("joinRoom", ({ user_id, surname, room }) => {
-      // console.log(room);
+      console.log(room);
       const user = usersUtils.userJoin(socket.id, user_id, surname, room);
 
       socket.join(user.room);

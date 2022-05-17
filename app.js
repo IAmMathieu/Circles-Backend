@@ -21,7 +21,8 @@ const corsOptions = {
   methods: "GET, HEAD, POST, PATCH, DELETE, OPTIONS",
   credentials: true,
   preflightContinue: false,
-  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+  allowedHeaders:
+    "Content-Type, Authorization, X-Requested-With, Access-Control-Allow-Origin",
 };
 
 const io = socketio(server, { cors: { origin: "*" } });
