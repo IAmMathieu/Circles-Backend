@@ -5,6 +5,10 @@ const users = [];
 const usersUtils = {
   // Join user to chat
   userJoin(socketId, dbId, surname, room) {
+    console.log(socketId);
+    console.log(dbId);
+    console.log(surname);
+    console.log(room);
     const dbUser = userController.getUserInfo(dbId);
     const img_url = dbUser.img_url;
 
