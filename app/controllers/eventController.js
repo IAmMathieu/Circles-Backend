@@ -3,16 +3,15 @@ const eventDataMapper = require("../datamapper/eventDatamapper");
 
 const eventController = {
   async addEvent(req, res) {
-    const userId = req.params.id;
+    const circleId = req.params.circle_id;
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
-    const addEvent = await eventDataMapper.addEvent(req.body, userId);
+    const addEvent = await eventDataMapper.addEvent(req.body, circleId);
     res.json(addEvent);
   },
 
   async patchEvent(req, res) {
-    const userId = req.params.id;
     const eventId = req.params.event_id;
 
     req.body.title = sanitizeHtml(req.body.title);
@@ -21,7 +20,6 @@ const eventController = {
 
     const patchEvent = await eventDataMapper.patchEvent(
       req.body,
-      userId,
       eventId
     );
     res.json(patchEvent);
@@ -41,7 +39,8 @@ const eventController = {
 
   async deleteEvent(req, res) {
     const eventId = req.params.event_id;
-    const deleteEvent = await eventDataMapper.deleteEvent(eventId, req.body);
+    const circleId = req.params.circle_id;
+    const deleteEvent = await eventDataMapper.deleteEvent(eventId, circleId, req.body);
     if (deleteEvent) {
       res.send("Event is deleted");
     } else {
