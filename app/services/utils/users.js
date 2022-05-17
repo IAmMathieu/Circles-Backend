@@ -1,4 +1,4 @@
-const userController = require("../../controllers/userController");
+const userDataMapper = require("../../datamapper/userDatamapper");
 
 const users = [];
 
@@ -9,7 +9,7 @@ const usersUtils = {
     console.log(dbId);
     console.log(surname);
     console.log(room);
-    const dbUser = userController.getUserInfo(dbId);
+    const dbUser = userDataMapper.getUserInfo(dbId);
     const img_url = dbUser.img_url;
 
     const user = { socketId, dbId, surname, img_url, room };
