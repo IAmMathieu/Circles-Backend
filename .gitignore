@@ -6,5 +6,4 @@ tokenTestInfo
 test.sql
 SQL_update.sql
 test.js
-log/*
 convert_date.js

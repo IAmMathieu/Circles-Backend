@@ -36,7 +36,6 @@ exports = module.exports = function (io) {
     // Listen for chatMessage
     socket.on("chatMessage", (msg) => {
       const user = usersUtils.getCurrentUser(socket.id);
-
       chatController.sendMessageToDB(msg, socket.id, user.room);
 
       io.in(user.room).emit(

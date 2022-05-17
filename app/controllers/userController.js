@@ -3,14 +3,13 @@ const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
 const { createEvent } = require("../services/addAnniversaryEvents");
 const axios = require("axios").default;
-const sanitizeHtml  =  require ('sanitize-html') ;
-
+const sanitizeHtml = require("sanitize-html");
 
 const userController = {
   async getUser(req, res) {
     //Sanitize req.body
-    req.body.email = sanitizeHtml(req.body.email)
-    const email  = req.body.email;
+    req.body.email = sanitizeHtml(req.body.email);
+    const email = req.body.email;
     const user = await userDataMapper.getUser(email);
 
     if (!user) {
@@ -52,7 +51,7 @@ const userController = {
     req.body.password = sanitizeHtml(req.body.password);
     req.body.img_url = sanitizeHtml(req.body.img_url);
 
-    const userData = req.body
+    const userData = req.body;
 
     let userPassword = req.body.password;
     //Hash of password
@@ -69,12 +68,14 @@ const userController = {
       .catch((err) => console.log("unable to fetch"));
     const createdUser = await userDataMapper.createUser(userData);
 
-    createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
-    if (createdUser) {
+    if (!createdUser) {
+      res.status(400).send("Bad Request");
+    } else {
+      createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
       res.json(createdUser);
-    } else res.status(400).send("Bad Request");
+    }
   },
-  
+
   async patchUser(req, res) {
     const userId = req.params.id;
 
