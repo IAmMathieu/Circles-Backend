@@ -69,7 +69,7 @@ router
   .post(jwbtoken.getAuthorization, routerWrapper(eventController.addEvent));
 
 router
-  .route("/api/circle/:circle_id(\\d+)/event/:event_id(\\d+)")
+  .route("/api/circle/event/:event_id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(eventController.oneEvent))
   .patch(jwbtoken.getAuthorization, routerWrapper(eventController.patchEvent))
   .delete(
