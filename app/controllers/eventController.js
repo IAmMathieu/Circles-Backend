@@ -1,20 +1,13 @@
 const sanitizeHtml = require("sanitize-html");
-const eventDatamapper = require("../datamapper/eventDatamapper");
-const dateConverter = require("../services/utils/dateConverter");
+const eventDataMapper = require("../datamapper/eventDatamapper");
 
 const eventController = {
   async addEvent(req, res) {
-    req.body.circle_id = req.params.circle_id;
+    const userId = req.params.id;
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
-
-    // const formatedDate = dateConverter(req.body.start);
-
-    // req.body.start = formatedDate;
-
-    const addEvent = await eventDatamapper.addEvent(req.body);
-
+    const addEvent = await eventDataMapper.addEvent(req.body, userId);
     res.json(addEvent);
   },
 
