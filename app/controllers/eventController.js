@@ -8,10 +8,6 @@ const eventController = {
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
 
-    if (req.body.end === null) {
-      req.body.end = req.body.start;
-    }
-
     const addEvent = await eventDatamapper.addEvent(req.body);
 
     res.json(addEvent);
