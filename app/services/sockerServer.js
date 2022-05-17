@@ -39,7 +39,10 @@ exports = module.exports = function (io) {
 
       chatController.sendMessageToDB(msg, socket.id, user.room);
 
-      io.in(user.room).emit("message", formatMessage(user.surname, msg));
+      io.in(user.room).emit(
+        "message",
+        formatMessage(user.dbId, user.surname, msg)
+      );
     });
 
     // Runs when client disconnects
