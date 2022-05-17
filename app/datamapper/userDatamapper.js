@@ -53,8 +53,12 @@ const userDataMapper = {
         userData.img_url,
       ],
     };
+<<<<<<< HEAD
 
     return (await client.query(query)).rows[0];
+=======
+    return await client.query(query);
+>>>>>>> develop
   },
 
   //Patch a user

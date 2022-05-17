@@ -2,7 +2,13 @@ node_modules
 .env
 squitch.conf
 tokenTestInfo
+<<<<<<< HEAD
 *.http
 test.sql
 SQL_update.sql
 test.js
+=======
+test.http
+test.sql
+log
+>>>>>>> develop

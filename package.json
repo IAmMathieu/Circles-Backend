@@ -12,7 +12,11 @@
     "moment-timezone": "^0.5.34",
     "pg": "^8.7.3",
     "randomstring": "^1.2.2",
+<<<<<<< HEAD
     "socket.io": "^4.5.0"
+=======
+    "sanitize-html": "^2.7.0"
+>>>>>>> develop
   },
   "name": "circles_api",
   "version": "1.0.0",
@@ -20,7 +24,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "dev": "nodemon app"
+    "dev": "nodemon app",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,5 +36,12 @@
   "bugs": {
     "url": "https://github.com/O-clock-Atome/projet-5-circles-back/issues"
   },
+<<<<<<< HEAD
   "homepage": "https://github.com/O-clock-Atome/projet-5-circles-back#readme"
+=======
+  "homepage": "https://github.com/O-clock-Atome/projet-5-circles-back#readme",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+>>>>>>> develop
 }
