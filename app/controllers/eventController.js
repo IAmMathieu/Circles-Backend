@@ -8,7 +8,14 @@ const eventController = {
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
 
-    console.log("Dans le eventController: " + req.body);
+    console.log("Dans le eventController: " + req.body.title);
+    console.log("Dans le eventController: " + req.body.start);
+    console.log("Dans le eventController: " + req.body.end);
+    console.log("Dans le eventController: " + req.body.description);
+    console.log("Dans le eventController: " + req.body.allday);
+    console.log("Dans le eventController: " + req.body.user_id);
+    console.log("Dans le eventController: " + req.body.circle_id);
+    console.log("Dans le eventController: " + req.body.color);
 
     const addEvent = await eventDatamapper.addEvent(req.body);
 
