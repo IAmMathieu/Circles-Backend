@@ -52,11 +52,11 @@ const userController = {
     req.body.img_url = sanitizeHtml(req.body.img_url);
 
     if (
-      req.body.firstname == null ||
-      req.body.lastname == null ||
-      req.body.email == null ||
-      req.body.birthdate == null ||
-      req.body.password == null
+      !req.body.firstname ||
+      !req.body.lastname ||
+      !req.body.email ||
+      !req.body.birthdate ||
+      !req.body.password
     ) {
       res.status(400).send("Bad request");
     } else {
