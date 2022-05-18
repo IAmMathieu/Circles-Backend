@@ -56,6 +56,13 @@ const userController = {
     req.body.password = sanitizeHtml(req.body.password);
     // req.body.img_url = sanitizeHtml(req.body.img_url);
 
+    axios
+      .get("https://randomuser.me/api/")
+      .then((response) => {
+        req.body.img_url = response.data.results[0].picture.large;
+      })
+      .catch((err) => console.log("unable to fetch"));
+
     req.body.validationCode = await generateUser();
     req.body.isValid = false;
 
@@ -77,19 +84,14 @@ const userController = {
         Number(process.env.saltRounds)
       );
 
-      axios
-        .get("https://randomuser.me/api/")
-        .then((response) => {
-          userData.img_url = response.data.results[0].picture.large;
-        })
-        .catch((err) => console.log("unable to fetch"));
-
       const createdUser = await userDataMapper.createUser(userData);
 
       sendMail.sendEmailValidator(userData.email, userData.validationCode);
 
       if (!createdUser) {
         res.status(400).send("Bad Request");
+      } else {
+        res.status(201).send("User created, waiting for email validation");
       }
     }
   },
