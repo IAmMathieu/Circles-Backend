@@ -42,7 +42,7 @@ const userDataMapper = {
   async createUser(userData) {
     const query = {
       text: `INSERT INTO "user" ("firstname","lastname", "surname", "email", "password", "birthdate","img_url")
-              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url`,
+              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url RETURNING *`,
       values: [
         userData.firstname,
         userData.lastname,
@@ -54,7 +54,13 @@ const userDataMapper = {
       ],
     };
 
-    return (await client.query(query)).rows[0];
+    const newUser = await client.query(query);
+
+    if (newUser) {
+      return newUser.rows[0];
+    } else {
+      return false;
+    }
   },
 
   //Patch a user

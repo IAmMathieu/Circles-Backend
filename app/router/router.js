@@ -77,6 +77,14 @@ router
     routerWrapper(eventController.deleteEvent)
   );
 
+router
+  .route("/api/message/message_id(\\d+)")
+  .patch(jwbtoken.getAuthorization, routerWrapper(chatController.updateMessage))
+  .delete(
+    jwbtoken.getAuthorization,
+    routerWrapper(chatController.deleteMessage)
+  );
+
 // Gestion user non authentifié - url non reconnu
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {

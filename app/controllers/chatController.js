@@ -16,6 +16,30 @@ const chatController = {
     if (!sendMessage) {
     }
   },
+
+  async updateMessage(req, res) {
+    const messageId = req.params.message_id;
+    const updatedMessage = await chatDatamapper.updateMessage(
+      messageId,
+      req.body
+    );
+
+    res.json(updatedMessage);
+  },
+
+  async deleteMessage(req, res) {
+    const messageId = req.params.message_id;
+    const deletedMessage = await chatDatamapper.deleteMessage(
+      messageId,
+      req.body
+    );
+
+    if (deletedMessage) {
+      res.status(200).send("Message successfully deleted.");
+    } else {
+      res.status(400).send("Bad request or incorrect informations");
+    }
+  },
 };
 
 module.exports = chatController;
