@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const client = require("../config/database");
 
 const circleDatamapper = {

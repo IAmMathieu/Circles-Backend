@@ -1,5 +1,6 @@
 const sanitizeHtml = require("sanitize-html");
 const eventDatamapper = require("../datamapper/eventDatamapper");
+const dateConverter = require("../services/utils/dateConverter");
 
 const eventController = {
   async addEvent(req, res) {
@@ -7,6 +8,10 @@ const eventController = {
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
+
+    const formatedDate = dateConverter(req.body.start);
+
+    req.body.start = formatedDate;
 
     const addEvent = await eventDatamapper.addEvent(req.body);
 

@@ -1,7 +1,7 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
-const { createEvent } = require("../services/addAnniversaryEvents");
+const { createEvent } = require("../services/utils/addAnniversaryEvents");
 const axios = require("axios").default;
 const sanitizeHtml = require("sanitize-html");
 

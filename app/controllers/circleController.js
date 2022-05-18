@@ -1,6 +1,6 @@
-const { generate } = require("../services/uniqueCodeGenerator");
+const { generate } = require("../services/utils/uniqueCodeGenerator");
 const circleDatamapper = require("../datamapper/circleDatamapper");
-const sanitizeHtml  =  require ('sanitize-html') ;
+const sanitizeHtml = require("sanitize-html");
 
 const circleController = {
   async getCircle(req, res) {
@@ -28,12 +28,11 @@ const circleController = {
   async updateCircle(req, res) {
     const circleId = req.params.id;
 
-    req.body.name = sanitizeHtml(req.body.name),
-    req.body.description = sanitizeHtml(req.body.description),
-    req.body.color = sanitizeHtml(req.body.color),
-    req.body.img_url = sanitizeHtml(req.body.img_url),
-
-    console.log(req.body)
+    (req.body.name = sanitizeHtml(req.body.name)),
+      (req.body.description = sanitizeHtml(req.body.description)),
+      (req.body.color = sanitizeHtml(req.body.color)),
+      (req.body.img_url = sanitizeHtml(req.body.img_url)),
+      console.log(req.body);
 
     const circle = await circleDatamapper.updateCircle(circleId, req.body);
 

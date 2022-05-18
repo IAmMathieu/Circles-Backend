@@ -1,5 +1,5 @@
 const randomstring = require("randomstring");
-const circleDatamapper = require("../datamapper/circleDatamapper");
+const circleDatamapper = require("../../datamapper/circleDatamapper");
 
 const uniqueCodeGenerator = {
   async generate() {
