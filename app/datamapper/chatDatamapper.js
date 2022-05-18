@@ -14,23 +14,23 @@ const chatDatamapper = {
   async updateMessage(messageId, data) {
     const query = {
       text: `UPDATE "message" SET "message".content = $1 WHERE "message".id = $2 AND "message".user_id = $3`,
-      values: [data.text, messageId, data.user_id]
-    }
+      values: [data.text, messageId, data.user_id],
+    };
 
     const updatedMessage = await client.query(query);
 
-    return updatedMessage.rows[0]
+    return updatedMessage.rows[0];
   },
 
   async deleteMessage(messageId, data) {
     const query = {
-      text: `DELETE FROM "message" WHERE "message".id = $2 AND "message".user_id = $3`,\
-      values: [messageId, data.user_id]
-    }
+      text: `DELETE FROM "message" WHERE "message".id = $2 AND "message".user_id = $3`,
+      values: [messageId, data.user_id],
+    };
 
     const deletedMessage = await client.query(query);
 
-    return !!deletedMessage.rowCount
+    return !!deletedMessage.rowCount;
   },
 };
 

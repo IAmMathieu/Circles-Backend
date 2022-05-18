@@ -111,7 +111,7 @@ const userController = {
       if (patchUser) {
         res.status(201).send("User is changed");
       } else {
-        res.status(502).send("User not found in database.");
+        res.status(400).send("Bad request or User not found");
       }
     }
   },

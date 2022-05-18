@@ -79,7 +79,11 @@ const userDataMapper = {
       [...values, id]
     );
 
-    return updatedUser.rows[0];
+    if (updatedUser) {
+      return updatedUser.rows[0];
+    } else {
+      return false;
+    }
   },
 
   //Delete a user
