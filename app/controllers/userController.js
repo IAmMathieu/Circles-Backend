@@ -51,6 +51,15 @@ const userController = {
     req.body.password = sanitizeHtml(req.body.password);
     req.body.img_url = sanitizeHtml(req.body.img_url);
 
+    if (
+      req.body.firstname == null ||
+      req.body.lastname == null ||
+      req.body.email == null ||
+      req.body.birthdate == null ||
+      req.body.password == null
+    ) {
+      res.status(400).send("Bad request");
+    }
     const userData = req.body;
 
     let userPassword = req.body.password;
