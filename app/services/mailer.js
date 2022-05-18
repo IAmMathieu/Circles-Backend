@@ -1,14 +1,14 @@
 const nodemailer = require("nodemailer");
 
-const sendMail = {
-  Transport: nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: process.env.AMAILADDR,
-      pass: process.env.AMAILPASS,
-    },
-  }),
+const Transport = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.AMAILADDR,
+    pass: process.env.AMAILPASS,
+  },
+});
 
+const sendMail = {
   sendEmailValidator(email, validationCode) {
     let mailOptions;
     let sender = "Circles Admin";
