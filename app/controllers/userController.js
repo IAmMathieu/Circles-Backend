@@ -176,7 +176,7 @@ const userController = {
   },
 
   async validateEmail(req, res) {
-    const validationCode = req.params.validation_code;
+    const validationCode = req.params.code_activate;
 
     const user = await userDataMapper.getUserByCode(validationCode);
 

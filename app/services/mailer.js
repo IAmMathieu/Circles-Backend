@@ -16,7 +16,7 @@ const sendMail = {
       from: sender,
       to: email,
       subject: "Confirmation de votre adresse mail",
-      html: `Veuillez suivre ce <a href=https://cercles.herokuapp.com/verify/${validationCode}> lien </a> confirmer votre adresse mail. Merci`,
+      html: `Veuillez suivre ce <a href=http://localhost:3000/activate/${validationCode}> lien </a> confirmer votre adresse mail. Merci`,
     };
 
     Transport.sendMail(mailOptions, (err, res) => {

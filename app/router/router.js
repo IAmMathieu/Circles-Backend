@@ -86,7 +86,7 @@ router
   );
 
 router.post(
-  "/api/verify/:validation_code",
+  "/api/activate/:code_activate",
   routerWrapper(userController.validateEmail)
 );
 
