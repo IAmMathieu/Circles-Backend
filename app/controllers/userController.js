@@ -59,29 +59,30 @@ const userController = {
       req.body.password == null
     ) {
       res.status(400).send("Bad request");
-    }
-    const userData = req.body;
-
-    let userPassword = req.body.password;
-    //Hash of password
-    userData.password = await bcrypt.hash(
-      userPassword,
-      Number(process.env.saltRounds)
-    );
-
-    axios
-      .get("https://randomuser.me/api/")
-      .then((response) => {
-        userData.img_url = response.data.results[0].picture.large;
-      })
-      .catch((err) => console.log("unable to fetch"));
-    const createdUser = await userDataMapper.createUser(userData);
-
-    if (!createdUser) {
-      res.status(400).send("Bad Request");
     } else {
-      createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
-      res.json(createdUser);
+      const userData = req.body;
+
+      let userPassword = req.body.password;
+      //Hash of password
+      userData.password = await bcrypt.hash(
+        userPassword,
+        Number(process.env.saltRounds)
+      );
+
+      axios
+        .get("https://randomuser.me/api/")
+        .then((response) => {
+          userData.img_url = response.data.results[0].picture.large;
+        })
+        .catch((err) => console.log("unable to fetch"));
+      const createdUser = await userDataMapper.createUser(userData);
+
+      if (!createdUser) {
+        res.status(400).send("Bad Request");
+      } else {
+        createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
+        res.json(createdUser);
+      }
     }
   },
 
