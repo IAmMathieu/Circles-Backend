@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "*",
   methods: "GET, HEAD, POST, PATCH, DELETE, OPTIONS",
-  credentials: true,
+  credentials: false,
   preflightContinue: false,
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };
@@ -27,8 +27,6 @@ const corsOptions = {
 const io = socketio(server, {
   cors: corsOptions,
 });
-
-// const io = socketio(server, corsOptions);
 
 const socketServ = require("./app/services/sockerServer")(io);
 

@@ -16,6 +16,9 @@ const userController = {
 
     if (!user) {
       res.status(401).send("Email does not exist");
+    } else if (user.isvalid == false) {
+      res.status(401).send("Email not validated");
+      sendEmailValidator(email, user.validation_code);
     } else {
       const givenPassword = req.body.password;
       const fetchPassword = user.password;
