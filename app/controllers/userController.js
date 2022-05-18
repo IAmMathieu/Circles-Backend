@@ -1,7 +1,7 @@
 const userDataMapper = require("../datamapper/userDatamapper");
 const { generateUser } = require("../services/utils/uniqueCodeGenerator");
 const { createEvent } = require("../services/utils/addAnniversaryEvents");
-const sendEmailValidator = require("../services/mailer");
+const sendMail = require("../services/mailer");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
 const axios = require("axios").default;
@@ -18,7 +18,7 @@ const userController = {
       res.status(401).send("Email does not exist");
     } else if (user.isvalid == false) {
       res.status(401).send("Email not validated");
-      sendEmailValidator(email, user.validation_code);
+      sendMail.sendEmailValidator(email, user.validation_code);
     } else {
       const givenPassword = req.body.password;
       const fetchPassword = user.password;
@@ -85,7 +85,7 @@ const userController = {
         .catch((err) => console.log("unable to fetch"));
       const createdUser = await userDataMapper.createUser(userData);
 
-      sendEmailValidator(userData.email, userData.validationCode);
+      sendMail.sendEmailValidator(userData.email, userData.validationCode);
 
       if (!createdUser) {
         res.status(400).send("Bad Request");
