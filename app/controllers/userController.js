@@ -54,7 +54,7 @@ const userController = {
     req.body.lastname = sanitizeHtml(req.body.lastname);
     req.body.email = sanitizeHtml(req.body.email);
     req.body.password = sanitizeHtml(req.body.password);
-    req.body.img_url = sanitizeHtml(req.body.img_url);
+    // req.body.img_url = sanitizeHtml(req.body.img_url);
 
     req.body.validationCode = await generateUser();
     req.body.isValid = false;
@@ -83,6 +83,7 @@ const userController = {
           userData.img_url = response.data.results[0].picture.large;
         })
         .catch((err) => console.log("unable to fetch"));
+
       const createdUser = await userDataMapper.createUser(userData);
 
       sendMail.sendEmailValidator(userData.email, userData.validationCode);
@@ -149,11 +150,11 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      // const oldpassword = req.body.oldpassword;
+      // const password = req.body.password;
       // const fetchPassword = user.password;
 
       // const isPasswordCorrect = await bcrypt.compare(
-      //   oldpassword,
+      //   password,
       //   fetchPassword
       // );
 
