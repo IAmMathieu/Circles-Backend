@@ -9,18 +9,9 @@ const eventController = {
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
 
-    console.log("controller: " + req.body.title);
-    console.log("controller: " + req.body.description);
-    console.log("controller: " + req.body.start);
-    console.log("controller: " + req.body.end);
-    console.log("controller: " + req.body.allday);
-    console.log("controller: " + req.body.user_id);
-    console.log("controller: " + req.body.circle_id);
-    console.log("controller: " + req.body.color);
+    // const formatedDate = dateConverter(req.body.start);
 
-    const formatedDate = dateConverter(req.body.start);
-
-    req.body.start = formatedDate;
+    // req.body.start = formatedDate;
 
     const addEvent = await eventDatamapper.addEvent(req.body);
 
