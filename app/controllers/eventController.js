@@ -19,8 +19,8 @@ const eventController = {
   },
 
   async patchEvent(req, res) {
-    const userId = req.params.id;
     const eventId = req.params.event_id;
+    const userId = req.body.user_id;
 
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
@@ -28,8 +28,8 @@ const eventController = {
 
     const patchEvent = await eventDatamapper.patchEvent(
       req.body,
-      userId,
-      eventId
+      eventId,
+      userId
     );
     res.json(patchEvent);
   },
@@ -42,13 +42,16 @@ const eventController = {
 
   async oneEvent(req, res) {
     const eventId = req.params.event_id;
+
     const oneEvent = await eventDatamapper.oneEvent(eventId);
     res.json(oneEvent);
   },
 
   async deleteEvent(req, res) {
     const eventId = req.params.event_id;
-    const deleteEvent = await eventDatamapper.deleteEvent(eventId, req.body);
+    const userId = req.body.user_id;
+
+    const deleteEvent = await eventDatamapper.deleteEvent(eventId, userId);
     if (deleteEvent) {
       res.send("Event is deleted");
     } else {

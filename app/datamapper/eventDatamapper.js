@@ -21,15 +21,17 @@ const eventDatamapper = {
     return circle.rows[0];
   },
 
-  async patchEvent(data, circleId) {
+  async patchEvent(data, circleId, userId) {
     const fields = Object.keys(data).map(
       (prop, index) => `"${prop}" = $${index + 1}`
     );
     const values = Object.values(data);
 
     const updatedEvent = await client.query(
-      `UPDATE event SET ${fields} WHERE id = $${fields.length + 1} RETURNING *`,
-      [...values, circleId]
+      `UPDATE event SET ${fields} WHERE "event".id = $${
+        fields.length + 1
+      } and user_id = $${fields.length + 2} RETURNING *`,
+      [...values, circleId, userId]
     );
 
     return updatedEvent.rows[0];
@@ -46,22 +48,22 @@ const eventDatamapper = {
     const allEvent = await client.query(query);
     return allEvent.rows;
   },
-  async oneEvent(eventId, circleId) {
+  async oneEvent(eventId) {
     const query = {
       text: `SELECT * 
                 FROM "event"
-                WHERE "event".id = $1 AND circle_id = $2`,
-      values: [eventId, circleId],
+                WHERE "event".id = $1`,
+      values: [eventId],
     };
     const oneEvent = await client.query(query);
     return oneEvent.rows[0];
   },
 
-  async deleteEvent(eventId, circleId, userId) {
+  async deleteEvent(eventId, userId) {
     const query = {
       text: `DELETE FROM "event"
-                    WHERE "event".id = $1 AND circle_id = $2 AND user_id= $3`,
-      values: [eventId, circleId, userId],
+                    WHERE "event".id = $1 AND user_id= $2`,
+      values: [eventId, userId],
     };
     const event = await client.query(query);
 
