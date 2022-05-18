@@ -56,7 +56,7 @@ const userDataMapper = {
 
     const newUser = await client.query(query);
 
-    if (newUser) {
+    if (newUser.rowCount) {
       return newUser.rows[0];
     } else {
       return false;
