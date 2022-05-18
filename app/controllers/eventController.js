@@ -13,7 +13,6 @@ const eventController = {
 
   async patchEvent(req, res) {
     const eventId = req.params.event_id;
-    const userId = req.body.user_id;
 
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);

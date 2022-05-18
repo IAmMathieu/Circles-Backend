@@ -89,6 +89,13 @@ const userController = {
   async patchUser(req, res) {
     const userId = req.params.id;
 
+    req.body.firstname = sanitizeHtml(req.body.firstname);
+    req.body.lastname = sanitizeHtml(req.body.lastname);
+    req.body.email = sanitizeHtml(req.body.email);
+    req.body.password = sanitizeHtml(req.body.password);
+    req.body.img_url = sanitizeHtml(req.body.img_url);
+    req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
+
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
 
