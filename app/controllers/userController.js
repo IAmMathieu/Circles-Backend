@@ -149,23 +149,23 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      const oldpassword = req.body.oldpassword;
-      const fetchPassword = user.password;
+      // const oldpassword = req.body.oldpassword;
+      // const fetchPassword = user.password;
 
-      const isPasswordCorrect = await bcrypt.compare(
-        oldpassword,
-        fetchPassword
-      );
+      // const isPasswordCorrect = await bcrypt.compare(
+      //   oldpassword,
+      //   fetchPassword
+      // );
 
-      if (isPasswordCorrect) {
-        const deleteUser = await userDataMapper.deleteUser(userId);
+      // if (isPasswordCorrect) {
+      const deleteUser = await userDataMapper.deleteUser(userId);
 
-        if (deleteUser) {
-          res.send("User successfully deleted");
-        } else {
-          res.send("Error, user can't be deleted ");
-        }
+      if (deleteUser) {
+        res.send("User successfully deleted");
+      } else {
+        res.send("Error, user can't be deleted ");
       }
+      // }
     }
   },
   async getAllInfosFromUserId(req, res) {
