@@ -85,6 +85,11 @@ router
     routerWrapper(chatController.deleteMessage)
   );
 
+router.post(
+  "/api/verify/:validation_code",
+  routerWrapper(userController.validateEmail)
+);
+
 // Gestion user non authentifié - url non reconnu
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {

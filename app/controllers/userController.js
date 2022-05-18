@@ -1,7 +1,9 @@
 const userDataMapper = require("../datamapper/userDatamapper");
+const { generateUser } = require("../services/utils/uniqueCodeGenerator");
+const { createEvent } = require("../services/utils/addAnniversaryEvents");
+const sendEmailValidator = require("../services/mailer");
 const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
-const { createEvent } = require("../services/utils/addAnniversaryEvents");
 const axios = require("axios").default;
 const sanitizeHtml = require("sanitize-html");
 
@@ -51,6 +53,9 @@ const userController = {
     req.body.password = sanitizeHtml(req.body.password);
     req.body.img_url = sanitizeHtml(req.body.img_url);
 
+    req.body.validationCode = await generateUser();
+    req.body.isValid = false;
+
     if (
       !req.body.firstname ||
       !req.body.lastname ||
@@ -77,11 +82,10 @@ const userController = {
         .catch((err) => console.log("unable to fetch"));
       const createdUser = await userDataMapper.createUser(userData);
 
+      sendEmailValidator(userData.email, userData.validationCode);
+
       if (!createdUser) {
         res.status(400).send("Bad Request");
-      } else {
-        createdUser.token = jwbtoken.generateAccessToken(createdUser.id);
-        res.json(createdUser);
       }
     }
   },
@@ -166,6 +170,27 @@ const userController = {
     const data = await userDataMapper.getAllInfosFromUserId(userId);
     createEvent(data);
     res.json(data);
+  },
+
+  async validateEmail(req, res) {
+    const validationCode = req.params.validation_code;
+
+    const user = await userDataMapper.getUserByCode(validationCode);
+
+    if (user) {
+      user.isvalid = true;
+
+      console.log(user);
+      const validatedUser = await userDataMapper.patchUser(user.id, {
+        isvalid: user.isvalid,
+      });
+      res.status(200).json({
+        logged: true,
+        user_id: validatedUser.id,
+        surname: validatedUser.surname,
+        token: jwbtoken.generateAccessToken(validatedUser.id),
+      });
+    }
   },
 };
 

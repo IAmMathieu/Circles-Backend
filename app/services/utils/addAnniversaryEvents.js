@@ -13,7 +13,7 @@ const makeAnniversaryEvent = {
     const currentDate = moment().tz("Europe/Paris").format("YYYY-MM-DD");
 
     result =
-      result > currentDate
+      result < currentDate
         ? result
         : (result = moment(result).add(1, "y").format("YYYY-MM-DD"));
 
@@ -33,7 +33,7 @@ const makeAnniversaryEvent = {
           title: "Anniversaire de " + user.surname,
           allday: true,
           description: "Anniversaire de " + user.surname,
-          isLocked: true
+          isLocked: true,
         };
 
         elt.events.unshift(anniversary);

@@ -1,4 +1,4 @@
-const { generate } = require("../services/utils/uniqueCodeGenerator");
+const { generateCircle } = require("../services/utils/uniqueCodeGenerator");
 const circleDatamapper = require("../datamapper/circleDatamapper");
 const sanitizeHtml = require("sanitize-html");
 
@@ -18,7 +18,7 @@ const circleController = {
       color: sanitizeHtml(req.body.color),
       img_url: sanitizeHtml(req.body.img_url),
       user_id: req.body.user_id,
-      unique_code: await generate(),
+      unique_code: await generateCircle(),
     };
     const circle = await circleDatamapper.createCircle(circleData);
 

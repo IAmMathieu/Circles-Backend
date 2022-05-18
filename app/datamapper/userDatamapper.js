@@ -41,8 +41,8 @@ const userDataMapper = {
   //Create a user
   async createUser(userData) {
     const query = {
-      text: `INSERT INTO "user" ("firstname","lastname", "surname", "email", "password", "birthdate","img_url")
-              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url`,
+      text: `INSERT INTO "user" ("firstname","lastname", "surname", "email", "password", "birthdate","img_url", "isvalid", "validation_code")
+              VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url`,
       values: [
         userData.firstname,
         userData.lastname,
@@ -51,6 +51,8 @@ const userDataMapper = {
         userData.password,
         userData.birthdate,
         userData.img_url,
+        userData.isValid,
+        userData.validationCode,
       ],
     };
 
@@ -132,6 +134,19 @@ const userDataMapper = {
     const data = await client.query(query);
 
     return data.rows;
+  },
+
+  async getUserByCode(code) {
+    const query = {
+      text: `SELECT *
+                FROM "user"
+                WHERE "user".validation_code = $1`,
+      values: [code],
+    };
+
+    const user = await client.query(query);
+
+    return user.rows[0];
   },
 };
 
