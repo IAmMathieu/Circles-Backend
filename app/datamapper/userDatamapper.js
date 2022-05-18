@@ -42,7 +42,7 @@ const userDataMapper = {
   async createUser(userData) {
     const query = {
       text: `INSERT INTO "user" ("firstname","lastname", "surname", "email", "password", "birthdate","img_url")
-              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url RETURNING *`,
+              VALUES ($1,$2,$3,$4,$5,$6, $7) RETURNING "user".id as user_id, "user".firstname, "user".lastname, "user".surname, "user".email, "user".birthdate, "user".img_url`,
       values: [
         userData.firstname,
         userData.lastname,
