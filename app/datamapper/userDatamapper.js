@@ -15,7 +15,7 @@ const userDataMapper = {
 
   async getUserById(id) {
     const query = {
-      text: `SELECT firstname, lastname, surname, email, birthdate, img_url 
+      text: `SELECT firstname, lastname, surname, email, password, birthdate, img_url 
                 FROM "user"
                 WHERE "user".id=$1`,
       values: [id],
@@ -71,7 +71,6 @@ const userDataMapper = {
       (prop, index) => `"${prop}" = $${index + 1}`
     );
 
-    console.log(fields);
     const values = Object.values(data);
 
     const updatedUser = await client.query(

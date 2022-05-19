@@ -16,35 +16,78 @@ const sendMail = {
       from: sender,
       to: email,
       subject: "Confirmation de votre adresse mail",
-      html: `Veuillez suivre ce <a href=http://localhost:3000/activate/${validationCode}> lien </a> confirmer votre adresse mail. Merci`,
+      html: `Veuillez suivre ce <a href=http://localhost:4242/activate/${validationCode}> lien </a> confirmer votre adresse mail. Merci`,
     };
 
     Transport.sendMail(mailOptions, (err, res) => {
       if (err) {
-        console.log(err);
+        return false;
       } else {
-        console.log("Message envoyé");
+        return true;
       }
     });
+
+    if (!Transport) {
+      return false;
+    } else {
+      return true;
+    }
   },
 
-  sendCircleInvite(email, circleCode) {
+  sendResetPassword(email, resetCode) {
     let mailOptions;
     let sender = "Circles Admin";
     mailOptions = {
       from: sender,
       to: email,
-      subject: "Vous avez été invité à rejoindre une communauté sur Circles",
-      html: `Veuillez suivre ce <a href=http://localhost:4242/invite/${circleCode}> lien </a> confirmer votre adresse mail. Merci`,
+      subject: "Demande de modification de mot de passe.",
+      html: `
+      Vous avez reçu ce mail car vous avez demandé la modification de votre mot de passe.
+      Veuillez suivre ce <a href=http://circles-c-est-la-vie/reset-password/${resetCode}> lien </a> confirmer votre demande.
+      Merci`,
     };
 
     Transport.sendMail(mailOptions, (err, res) => {
       if (err) {
-        console.log(err);
+        return false;
       } else {
-        console.log("Message envoyé");
+        return true;
       }
     });
+
+    if (!Transport) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  InviteToCircle(email, circleCode, userExist) {
+    let mailOptions;
+    let sender = "Circles Admin";
+    mailOptions = {
+      from: sender,
+      to: email,
+      subject: "Invitation à rejoindre un cercle.",
+      html: `
+      Vous avez reçu ce mail car Elon Musk vous invite à rejoindre son cercle trés privé.
+      Veuillez suivre ce <a href=http://circles-c-est-la-vie/invite/${circleCode}?user-exist=${userExist}> lien </a> si vous souhaitez rejoindre son cercle.
+      Merci`,
+    };
+
+    Transport.sendMail(mailOptions, (err, res) => {
+      if (err) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    if (!Transport) {
+      return false;
+    } else {
+      return true;
+    }
   },
 };
 

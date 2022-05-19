@@ -1,5 +1,5 @@
 const sanitizeHtml = require("sanitize-html");
-const eventDataMapper = require("../datamapper/eventDatamapper");
+const eventDatamapper = require("../datamapper/eventDatamapper");
 
 const eventController = {
   async addEvent(req, res) {
@@ -7,7 +7,7 @@ const eventController = {
     req.body.title = sanitizeHtml(req.body.title);
     req.body.description = sanitizeHtml(req.body.description);
     req.body.color = sanitizeHtml(req.body.color);
-    const addEvent = await eventDataMapper.addEvent(req.body, circleId);
+    const addEvent = await eventDatamapper.addEvent(req.body, circleId);
     res.json(addEvent);
   },
 

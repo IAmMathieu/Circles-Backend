@@ -1,6 +1,10 @@
 const { generateCircle } = require("../services/utils/uniqueCodeGenerator");
 const circleDatamapper = require("../datamapper/circleDatamapper");
 const sanitizeHtml = require("sanitize-html");
+const sendMail = require("../services/mailer");
+const userDataMapper = require("../datamapper/userDatamapper");
+const jwbtoken = require("../middlewares/jwtMiddleware");
+const bcrypt = require("bcrypt");
 
 const circleController = {
   async getCircle(req, res) {
@@ -90,6 +94,62 @@ const circleController = {
 
     res.json(circles);
   },
+
+  async inviteToCircle(req, res) {
+    const circleCode = req.body.unique_code;
+    const email = req.body.email;
+
+    const user = await userDataMapper.getUser(email);
+    let userExist = false;
+
+    if (user) {
+      userExist = true;
+    }
+
+    sendMail.InviteToCircle(email, circleCode, userExist);
+
+    if (!sendMail) {
+      res.status(400).send("Email not sent.");
+    } else {
+      res.status(200).send("Email sent");
+    }
+  },
+
+  // async joinCircle(req, res) {
+  //   const unique_code = req.body.unique_code;
+  //   const email = req.body.email;
+  //   const password = req.body.password;
+
+  //   const user = await userDataMapper.getUser(email);
+
+  //   if (!user) {
+  //     res.status(400).send("Email not found in database");
+  //   } else {
+  //     const givenPassword = password;
+  //     const fetchPassword = user.password;
+
+  //     const isPasswordCorrect = await bcrypt.compare(
+  //       givenPassword,
+  //       fetchPassword
+  //     );
+
+  //     if (!isPasswordCorrect) {
+  //       res.status(401).send("Password is incorrect");
+  //     } else {
+  //       const circle = await circleDatamapper.addUserToCircle(
+  //         user.id,
+  //         unique_code
+  //       );
+
+  //       res.json({
+  //         logged: true,
+  //         user_id: user.id,
+  //         surname: user.surname,
+  //         token: jwbtoken.generateAccessToken(user.id),
+  //       });
+  //     }
+  //   }
+  // },
 };
 
 module.exports = circleController;

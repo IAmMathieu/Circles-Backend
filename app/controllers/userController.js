@@ -6,6 +6,7 @@ const jwbtoken = require("../middlewares/jwtMiddleware");
 const bcrypt = require("bcrypt");
 const axios = require("axios").default;
 const sanitizeHtml = require("sanitize-html");
+const circleDatamapper = require("../datamapper/circleDatamapper");
 
 const userController = {
   async getUser(req, res) {
@@ -30,12 +31,26 @@ const userController = {
       if (!isPasswordCorrect) {
         res.status(401).send("Password is incorrect");
       } else {
-        res.json({
-          logged: true,
-          user_id: user.id,
-          surname: user.surname,
-          token: jwbtoken.generateAccessToken(user.id),
-        });
+        if (!req.body.unique_code) {
+          res.json({
+            logged: true,
+            user_id: user.id,
+            surname: user.surname,
+            token: jwbtoken.generateAccessToken(user.id),
+          });
+        } else if (req.body.unique_code != "") {
+          const circle = await circleDatamapper.addUserToCircle(
+            user.id,
+            req.body.unique_code
+          );
+
+          res.json({
+            logged: true,
+            user_id: user.id,
+            surname: user.surname,
+            token: jwbtoken.generateAccessToken(user.id),
+          });
+        }
       }
     }
   },
@@ -54,12 +69,14 @@ const userController = {
     req.body.lastname = sanitizeHtml(req.body.lastname);
     req.body.email = sanitizeHtml(req.body.email);
     req.body.password = sanitizeHtml(req.body.password);
-    // req.body.img_url = sanitizeHtml(req.body.img_url);
+    req.body.img_url = sanitizeHtml(req.body.img_url);
+    req.body.unique_code = sanitizeHtml(req.body.unique_code);
 
     axios
       .get("https://randomuser.me/api/")
       .then((response) => {
-        req.body.img_url = response.data.results[0].picture.large;
+        const img_url = response.data.results[0].picture.large;
+        req.body.img_url = img_url;
       })
       .catch((err) => console.log("unable to fetch"));
 
@@ -84,13 +101,20 @@ const userController = {
         Number(process.env.saltRounds)
       );
 
-      const createdUser = await userDataMapper.createUser(userData);
-
       sendMail.sendEmailValidator(userData.email, userData.validationCode);
+
+      const createdUser = await userDataMapper.createUser(userData);
 
       if (!createdUser) {
         res.status(400).send("Bad Request");
       } else {
+        if (req.body.unique_code) {
+          const uniqueCode = req.body.unique_code;
+          const circle = circleDatamapper.addUserToCircle(
+            createdUser.user_id,
+            uniqueCode
+          );
+        }
         res.status(201).send("User created, waiting for email validation");
       }
     }
@@ -101,10 +125,17 @@ const userController = {
 
     req.body.firstname = sanitizeHtml(req.body.firstname);
     req.body.lastname = sanitizeHtml(req.body.lastname);
+    req.body.surname = sanitizeHtml(req.body.surname);
     req.body.email = sanitizeHtml(req.body.email);
     req.body.password = sanitizeHtml(req.body.password);
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
+
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key] == "") {
+        delete req.body[key];
+      }
+    });
 
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
@@ -112,18 +143,22 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      if (req.body.password || req.body.email) {
+      if (req.body.oldpassword || req.body.email) {
         const oldpassword = req.body.oldpassword;
         const fetchPassword = user.password;
+
+        console.log("OldPass: " + oldpassword);
+        console.log("NewPass: " + fetchPassword);
 
         const isPasswordCorrect = await bcrypt.compare(
           oldpassword,
           fetchPassword
         );
 
-        if (isPasswordCorrect) {
+        if (!isPasswordCorrect) {
+          res.status(400).send("Password is incorrect");
+        } else {
           delete req.body.oldpassword;
-
           if (req.body.password) {
             req.body.password = await bcrypt.hash(
               req.body.password,
@@ -132,14 +167,14 @@ const userController = {
           }
         }
       }
+    }
 
-      const patchUser = await userDataMapper.patchUser(userId, req.body);
+    const patchUser = await userDataMapper.patchUser(userId, req.body);
 
-      if (patchUser) {
-        res.status(201).send("User is changed");
-      } else {
-        res.status(400).send("Bad request or User not found");
-      }
+    if (patchUser) {
+      res.status(201).send("User is changed");
+    } else {
+      res.status(400).send("Bad request or User not found");
     }
   },
 
@@ -185,8 +220,6 @@ const userController = {
 
     if (user) {
       user.isvalid = true;
-
-      console.log(user);
       const validatedUser = await userDataMapper.patchUser(user.id, {
         isvalid: user.isvalid,
       });
@@ -196,6 +229,41 @@ const userController = {
         surname: validatedUser.surname,
         token: jwbtoken.generateAccessToken(validatedUser.id),
       });
+    }
+  },
+
+  async sendResetEmail(req, res) {
+    const email = req.body.email;
+
+    const user = await userDataMapper.getUser(email);
+
+    if (!user) {
+      res.status(400).send("Email not found in database.");
+    } else {
+      sendMail.sendResetPassword(email, user.validation_code);
+      res.status(200).send("Reset password email sent");
+    }
+  },
+
+  async resetPassword(req, res) {
+    const resetCode = req.params.reset_code;
+    let newPassword = req.body.newPassword;
+
+    const user = await userDataMapper.getUserByCode(resetCode);
+
+    if (!user) {
+      res.status(400).send("User not found in database.");
+    } else if (!newPassword) {
+      res.status(400).send("Password is missing.");
+    } else {
+      newPassword = await bcrypt.hash(
+        newPassword,
+        Number(process.env.saltRounds)
+      );
+      const updatedUser = await userDataMapper.patchUser(user.id, {
+        password: newPassword,
+      });
+      res.status(200).send("Password updated");
     }
   },
 };

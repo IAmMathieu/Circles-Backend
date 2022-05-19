@@ -44,6 +44,15 @@ router.post(
   jwbtoken.getAuthorization,
   routerWrapper(circleController.addUserToCircle)
 );
+
+router.post(
+  "/api/circle/invite",
+  jwbtoken.getAuthorization,
+  routerWrapper(circleController.inviteToCircle)
+);
+
+router.post("/api/circle/join", routerWrapper(circleController.joinCircle));
+
 router.delete(
   "/api/circle/remove/:user_id(\\d+)",
   jwbtoken.getAuthorization,
@@ -88,6 +97,16 @@ router
 router.post(
   "/api/activate/:code_activate",
   routerWrapper(userController.validateEmail)
+);
+
+router.post(
+  "/api/reset-password/",
+  routerWrapper(userController.sendResetEmail)
+);
+
+router.post(
+  "/api/reset-password/:reset_code",
+  routerWrapper(userController.resetPassword)
 );
 
 // Gestion user non authentifié - url non reconnu
