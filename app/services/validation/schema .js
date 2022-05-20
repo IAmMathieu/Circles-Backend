@@ -2,12 +2,12 @@ const Joi = require("joi").extend(require("@joi/date"));
 
 //Validate register
 const registerSchema = Joi.object({
-  firstname: Joi.string().allow(""),
-  lastname: Joi.string().allow(""),
+  firstname: Joi.string(),
+  lastname: Joi.string(),
   surname: Joi.string().allow(""),
-  email: Joi.string().allow(""),
-  password: Joi.string().min(8).allow(""),
-  birthdate: Joi.date().allow(""),
+  email: Joi.string(),
+  password: Joi.string().min(8),
+  birthdate: Joi.date().format("YYYY-MM-DD"),
   img_url: Joi.string().allow(""),
 })
   .required()
@@ -21,12 +21,12 @@ const loginSchema = Joi.object({
   .min(2);
 
 const patchUserSchema = Joi.object({
-  firstname: Joi.string(),
-  lastname: Joi.string(),
-  email: Joi.string(),
-  password: Joi.string().min(8),
-  oldpassword: Joi.string(),
-  birthdate: Joi.date().format("YYYY-MM-DD"),
+  firstname: Joi.string().allow(""),
+  lastname: Joi.string().allow(""),
+  email: Joi.string().allow(""),
+  password: Joi.string().min(8).allow(""),
+  oldpassword: Joi.string().allow(""),
+  birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
 })
   .required()
