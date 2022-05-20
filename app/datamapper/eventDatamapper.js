@@ -27,6 +27,8 @@ const eventDatamapper = {
         return `"${prop}" = $${index + 1}`;
       } else if (prop == "user_id") {
         return `"${prop}" = COALESCE(NULLIF($${index + 1}, 0), "${prop}")`;
+      } else if (prop == "start" || prop == "end") {
+        return `"${prop}" = $${index + 1}`;
       } else {
         return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;
       }
