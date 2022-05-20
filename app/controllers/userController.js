@@ -221,7 +221,7 @@ const userController = {
 
     if (user) {
       user.isvalid = true;
-      const validatedUser = await userDataMapper.patchUser(user.id, {
+      const validatedUser = await userDataMapper.patchUserValidate(user.id, {
         isvalid: user.isvalid,
       });
       res.status(200).json({

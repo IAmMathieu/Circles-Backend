@@ -148,6 +148,14 @@ const userDataMapper = {
 
     return user.rows[0];
   },
+
+  async patchUserValidate(userId, isValid) {
+    const updatedUser = await client.query(
+      `UPDATE "user" SET "isvalid" = $1 WHERE id = $2
+      } RETURNING *`,
+      [isValid, userId]
+    );
+  },
 };
 
 module.exports = userDataMapper;
