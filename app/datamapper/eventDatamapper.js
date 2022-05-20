@@ -30,7 +30,7 @@ const eventDatamapper = {
       } else if (prop == "start" || prop == "end") {
         return `"${prop}" = COALESCE(NULLIF($${
           index + 1
-        }::date::text, ''), "${prop}")`;
+        }::text, ''), "${prop}")`;
       } else {
         return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;
       }
