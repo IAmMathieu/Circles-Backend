@@ -10,6 +10,7 @@ const client = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  
 });
 
 client.connect();

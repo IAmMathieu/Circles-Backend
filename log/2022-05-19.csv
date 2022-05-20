@@ -1,0 +1,38 @@
+09:49:28,/api/register,TypeError: Cannot read properties of undefined (reading 'details')
+10:09:06,/api/register,TypeError: Cannot read properties of undefined (reading 'details')
+10:09:27,/api/register,TypeError: Cannot read properties of undefined (reading 'details')
+10:09:37,/api/register,TypeError: Cannot read properties of undefined (reading 'details')
+10:12:30,/api/register,ReferenceError: errorMessage is not defined
+10:14:33,/api/register,TypeError: Cannot read properties of undefined (reading 'details')
+10:15:06,/api/register,error: duplicate key value violates unique constraint "user_email_key"
+10:25:47,/api/register,error: duplicate key value violates unique constraint "user_email_key"
+11:03:33,/api/profil/113,Error: data and hash arguments required
+11:03:41,/api/profil/113,Error: data and hash arguments required
+11:03:48,/api/profil/113,Error: data and hash arguments required
+11:08:55,/api/profil/113,TypeError: Cannot read properties of undefined (reading 'validate')
+11:15:49,/api/profil/113,TypeError: Cannot read properties of undefined (reading 'validate')
+11:16:08,/api/profil/113,Error: data and hash arguments required
+11:16:35,/api/profil/113,Error: data and hash arguments required
+11:23:18,/api/profil/113,Error: data and hash arguments required
+11:46:05,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+11:46:47,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+11:55:02,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+11:55:22,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+11:55:37,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+12:00:35,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+12:01:21,/api/profil/113,error: column "oldpassword" of relation "user" does not exist
+14:01:15,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+14:01:27,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+14:05:32,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+14:05:41,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+14:05:55,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+14:06:11,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+15:55:08,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+15:57:34,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+15:57:57,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+15:58:12,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'id')
+16:13:24,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'validate')
+16:13:52,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'validate')
+16:13:53,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'validate')
+16:42:50,/api/circle/new/113,TypeError: Cannot read properties of undefined (reading 'validate')
+17:47:54,/api/circle/77/event,TypeError: Cannot read properties of undefined (reading 'validate')

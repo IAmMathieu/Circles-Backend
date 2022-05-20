@@ -20,6 +20,7 @@ const circleController = {
       user_id: req.body.user_id,
       unique_code: await generateCircle(),
     };
+    console.log(circleData)
     const circle = await circleDatamapper.createCircle(circleData);
 
     res.json(circle);
@@ -57,7 +58,6 @@ const circleController = {
   async addUserToCircle(req, res) {
     const userId = req.params.user_id;
     const uniqueCode = sanitizeHtml(req.body.unique_code);
-
     const circle = await circleDatamapper.addUserToCircle(userId, uniqueCode);
 
     if (circle) {
