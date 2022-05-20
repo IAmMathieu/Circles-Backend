@@ -150,10 +150,14 @@ const userDataMapper = {
   },
 
   async patchUserValidate(userId, isValid) {
+    console.log(userId);
+    console.log(isValid);
     const updatedUser = await client.query(
-      `UPDATE "user" SET "isvalid" = $1 WHERE id = $2 RETURNING *`,
+      `UPDATE "user" SET "isvalid" = $1 WHERE "user".id = $2 RETURNING *`,
       [isValid, userId]
     );
+
+    return updatedUser.rows[0];
   },
 };
 

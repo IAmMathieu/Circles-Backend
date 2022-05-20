@@ -219,6 +219,8 @@ const userController = {
 
     const user = await userDataMapper.getUserByCode(validationCode);
 
+    console.log(user);
+
     if (user) {
       user.isvalid = true;
       const validatedUser = await userDataMapper.patchUserValidate(
