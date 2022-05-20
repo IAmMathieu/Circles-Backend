@@ -61,8 +61,8 @@ const updateCircleSchema = Joi.object({
 
 const createEventSchema = Joi.object({
   title: Joi.string(),
-  start: Joi.date().format("YYYY-MM-DD HH:mm:ss"),
-  end: Joi.date().format("YYYY-MM-DD HH:mm:ss"),
+  start: Joi.date(),
+  end: Joi.date(),
   description: Joi.string(),
   allday: Joi.boolean(),
   color: Joi.string(),
