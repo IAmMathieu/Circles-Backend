@@ -72,13 +72,15 @@ const userController = {
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.unique_code = sanitizeHtml(req.body.unique_code);
 
-    axios
-      .get("https://randomuser.me/api/")
-      .then((response) => {
-        const img_url = response.data.results[0].picture.large;
-        req.body.img_url = img_url;
-      })
-      .catch((err) => console.log("unable to fetch"));
+    if (req.body.img_url == "") {
+      axios
+        .get("https://randomuser.me/api/")
+        .then((response) => {
+          const img_url = response.data.results[0].picture.large;
+          req.body.img_url = img_url;
+        })
+        .catch((err) => console.log("unable to fetch"));
+    }
 
     req.body.validationCode = await generateUser();
     req.body.isValid = false;
@@ -227,6 +229,8 @@ const userController = {
         user.id,
         user.isvalid
       );
+
+      console.log(validatedUser);
       res.status(200).json({
         logged: true,
         user_id: validatedUser.id,
