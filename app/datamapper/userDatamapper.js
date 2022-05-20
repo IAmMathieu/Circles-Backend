@@ -68,7 +68,8 @@ const userDataMapper = {
   //Patch a user
   async patchUser(id, data) {
     const fields = Object.keys(data).map(
-      (prop, index) => `"${prop}" = $${index + 1}`
+      (prop, index) =>
+        `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`
     );
 
     const values = Object.values(data);

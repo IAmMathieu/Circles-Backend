@@ -23,7 +23,8 @@ const eventDatamapper = {
 
   async patchEvent(data, eventId) {
     const fields = Object.keys(data).map(
-      (prop, index) => `"${prop}" = $${index + 1}`
+      (prop, index) =>
+        `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`
     );
     const values = Object.values(data);
 
