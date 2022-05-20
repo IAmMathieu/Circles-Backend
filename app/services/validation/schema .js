@@ -7,7 +7,7 @@ const registerSchema = Joi.object({
   surname: Joi.string().allow(""),
   email: Joi.string(),
   password: Joi.string().min(8),
-  birthdate: Joi.date(),
+  birthdate: Joi.date().format("YYYY-MM-DD"),
   img_url: Joi.string().allow(""),
 })
   .required()
