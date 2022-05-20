@@ -1,5 +1,3 @@
-const { default: JoiDateFactory } = require("@joi/date");
-
 const Joi = require("joi").extend(require("@joi/date"));
 
 //Validate register
