@@ -15,20 +15,22 @@ const months = [
   "Dec",
 ];
 
-function dateConverter(date) {
-  const [_, month, day, year, time, ...rest] = date.split(" ");
+// function dateConverter(date) {
+//   const [_, month, day, year, time, ...rest] = date.split(" ");
 
-  let getMonth = String(months.indexOf(month) + 1);
+//   let getMonth = String(months.indexOf(month) + 1);
 
-  if (getMonth < 10) {
-    getMonth = "0" + getMonth; // passage de 1 à 01
-  }
+//   if (getMonth < 10) {
+//     getMonth = "0" + getMonth; // passage de 1 à 01
+//   }
 
-  const toDate = year + "-" + getMonth + "-" + day + " " + time;
+//   const toDate = year + "-" + getMonth + "-" + day + " " + time;
 
-  const formatedDate = moment(toDate).format("YYYY-MM-DD HH:mm:ss");
+//   const formatedDate = moment(toDate).format("YYYY-MM-DD HH:mm:ss");
 
-  return formatedDate;
-}
+//   return formatedDate;
+// }
+
+function convertDate(date) {}
 
 module.exports = dateConverter;

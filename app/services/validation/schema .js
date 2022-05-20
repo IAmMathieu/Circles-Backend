@@ -4,9 +4,10 @@ const Joi = require("joi").extend(require("@joi/date"));
 const registerSchema = Joi.object({
   firstname: Joi.string(),
   lastname: Joi.string(),
+  surname: Joi.string().allow(""),
   email: Joi.string(),
   password: Joi.string().min(8),
-  birthdate: Joi.date().format("YYYY-MM-DD"),
+  birthdate: Joi.date(),
   img_url: Joi.string().allow(""),
 })
   .required()
