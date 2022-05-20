@@ -5,9 +5,9 @@ const registerSchema = Joi.object({
   firstname: Joi.string(),
   lastname: Joi.string(),
   email: Joi.string(),
-  password: Joi.string().length().min(8),
+  password: Joi.string().min(8),
   birthdate: Joi.date().format("YYYY-MM-DD"),
-  img_url: Joi.string(),
+  img_url: Joi.string().allow(""),
 })
   .required()
   .min(6);
@@ -49,14 +49,14 @@ const addUserToCircle = Joi.object({
   .min(1);
 
 const updateCircleSchema = Joi.object({
-  name: Joi.string(),
-  description: Joi.string(),
-  color: Joi.string(),
+  name: Joi.string().allow(""),
+  description: Joi.string().allow(""),
+  color: Joi.string().allow(""),
   img_url: Joi.string().allow(""),
 })
   .required()
   .min(1)
-  .max(7);
+  .max(4);
 
 const createEventSchema = Joi.object({
   title: Joi.string(),
