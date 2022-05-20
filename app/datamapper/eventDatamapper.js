@@ -22,10 +22,16 @@ const eventDatamapper = {
   },
 
   async patchEvent(data, eventId) {
-    const fields = Object.keys(data).map(
-      (prop, index) =>
-        `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`
-    );
+    const fields = Object.keys(data).map((prop, index) => {
+      if (prop == "allday") {
+        return `"${prop}" = $${index + 1}`;
+      } else if (prop == "user_id") {
+        return `"${prop}" = COALESCE(NULLIF($${index + 1}, 0), "${prop}")`;
+      } else {
+        return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;
+      }
+    });
+
     const values = Object.values(data);
 
     const updatedEvent = await client.query(
