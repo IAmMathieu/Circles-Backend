@@ -32,7 +32,7 @@ const patchUserSchema = Joi.object({
 })
   .required()
   .min(1)
-  .max(7);
+  .max(8);
 
 const createCircleSchema = Joi.object({
   name: Joi.string(),
