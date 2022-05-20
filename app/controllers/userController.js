@@ -140,15 +140,15 @@ const userController = {
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
 
+    //console.log(user);
+    console.log(req.body);
+
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
       if (req.body.oldpassword || req.body.email) {
         const oldpassword = req.body.oldpassword;
         const fetchPassword = user.password;
-
-        console.log("OldPass: " + oldpassword);
-        console.log("NewPass: " + fetchPassword);
 
         const isPasswordCorrect = await bcrypt.compare(
           oldpassword,
@@ -159,6 +159,7 @@ const userController = {
           res.status(400).send("Password is incorrect");
         } else {
           delete req.body.oldpassword;
+
           if (req.body.password) {
             req.body.password = await bcrypt.hash(
               req.body.password,

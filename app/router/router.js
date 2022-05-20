@@ -6,6 +6,19 @@ const jwbtoken = require("../middlewares/jwtMiddleware");
 const app = express();
 const router = express.Router();
 
+//validation
+const validationModule = require("../services/validation/validate");
+const {
+  registerSchema,
+  loginSchema,
+  patchUserSchema,
+  createCircleSchema,
+  addUserToCircle,
+  updateCircleSchema,
+  createEventSchema,
+  patchEventSchema,
+} = require("../services/validation/schema ");
+
 //tous les controller
 const userController = require("../controllers/userController");
 const circleController = require("../controllers/circleController");
@@ -13,8 +26,16 @@ const chatController = require("../controllers/chatController");
 const eventController = require("../controllers/eventController");
 
 // Controller User
-router.post("/api/login", routerWrapper(userController.getUser));
-router.post("/api/register", routerWrapper(userController.createUser));
+router.post(
+  "/api/login",
+  validationModule.validateBody(loginSchema),
+  routerWrapper(userController.getUser)
+);
+router.post(
+  "/api/register",
+  validationModule.validateBody(registerSchema),
+  routerWrapper(userController.createUser)
+);
 
 router.get(
   "/api/dashboard/:id(\\d+)",
@@ -25,7 +46,11 @@ router.get(
 router
   .route("/api/profil/:id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(userController.getUserInfo))
-  .patch(jwbtoken.getAuthorization, routerWrapper(userController.patchUser))
+  .patch(
+    validationModule.validateBody(patchUserSchema),
+    jwbtoken.getAuthorization,
+    routerWrapper(userController.patchUser)
+  )
   .delete(jwbtoken.getAuthorization, routerWrapper(userController.deletUser));
 router.get(
   "/api/profil/:id(\\d+)/circles",
@@ -37,11 +62,13 @@ router.get(
 router.post(
   "/api/circle",
   jwbtoken.getAuthorization,
+  validationModule.validateBody(createCircleSchema),
   routerWrapper(circleController.createCircle)
 );
 router.post(
   "/api/circle/new/:user_id(\\d+)",
   jwbtoken.getAuthorization,
+  validationModule.validateBody(addUserToCircle),
   routerWrapper(circleController.addUserToCircle)
 );
 
@@ -64,6 +91,7 @@ router
   .get(jwbtoken.getAuthorization, routerWrapper(circleController.getCircle))
   .patch(
     jwbtoken.getAuthorization,
+    validationModule.validateBody(updateCircleSchema),
     routerWrapper(circleController.updateCircle)
   )
   .delete(
@@ -75,12 +103,20 @@ router
 router
   .route("/api/circle/:circle_id(\\d+)/event")
   .get(jwbtoken.getAuthorization, routerWrapper(eventController.allEvent))
-  .post(jwbtoken.getAuthorization, routerWrapper(eventController.addEvent));
+  .post(
+    jwbtoken.getAuthorization,
+    validationModule.validateBody(createEventSchema),
+    routerWrapper(eventController.addEvent)
+  );
 
 router
   .route("/api/circle/event/:event_id(\\d+)")
   .get(jwbtoken.getAuthorization, routerWrapper(eventController.oneEvent))
-  .patch(jwbtoken.getAuthorization, routerWrapper(eventController.patchEvent))
+  .patch(
+    jwbtoken.getAuthorization,
+    validationModule.validateBody(patchEventSchema),
+    routerWrapper(eventController.patchEvent)
+  )
   .delete(
     jwbtoken.getAuthorization,
     routerWrapper(eventController.deleteEvent)
