@@ -70,6 +70,8 @@ const userDataMapper = {
     const fields = Object.keys(data).map((prop, index) => {
       if (prop == "birthdate") {
         return `"${prop}" = $${index + 1}`;
+      } else if (prop == "oldpassword") {
+        return;
       } else {
         return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;
       }
