@@ -82,20 +82,33 @@ const userController = {
 
     req.body.firstname = sanitizeHtml(req.body.firstname);
     req.body.lastname = sanitizeHtml(req.body.lastname);
+    req.body.surname = sanitizeHtml(req.body.surname);
     req.body.email = sanitizeHtml(req.body.email);
     req.body.password = sanitizeHtml(req.body.password);
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
 
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key] == "") {
+        delete req.body[key];
+      }
+    });
+
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
+
+    //console.log(user);
+    console.log(req.body)
 
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      if (req.body.password || req.body.email) {
+      if (req.body.oldpassword || req.body.email) {
         const oldpassword = req.body.oldpassword;
         const fetchPassword = user.password;
+
+        //console.log("OldPass: " + oldpassword);
+        //console.log("NewPass: " + fetchPassword);
 
         const isPasswordCorrect = await bcrypt.compare(
           oldpassword,
@@ -104,6 +117,7 @@ const userController = {
 
         if (isPasswordCorrect) {
           delete req.body.oldpassword;
+          console.log(req.body);
 
           if (req.body.password) {
             req.body.password = await bcrypt.hash(
@@ -111,6 +125,8 @@ const userController = {
               Number(process.env.saltRounds)
             );
           }
+        }else{
+          res.status(400).send("Old Password is not correct")
         }
       }
 
@@ -119,7 +135,7 @@ const userController = {
       if (patchUser) {
         res.status(201).send("User is changed");
       } else {
-        res.status(502).send("User not found in database.");
+        res.status(400).send("Bad request or User not found");
       }
     }
   },
