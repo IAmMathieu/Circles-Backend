@@ -2,12 +2,12 @@ const Joi = require("joi").extend(require("@joi/date"));
 
 //Validate register
 const registerSchema = Joi.object({
-  firstname: Joi.string(),
-  lastname: Joi.string(),
+  firstname: Joi.string().allow(""),
+  lastname: Joi.string().allow(""),
   surname: Joi.string().allow(""),
-  email: Joi.string(),
-  password: Joi.string().min(8),
-  birthdate: Joi.date().format("YYYY-MM-DD"),
+  email: Joi.string() / allow(""),
+  password: Joi.string().min(8).allow(""),
+  birthdate: Joi.date().allow(""),
   img_url: Joi.string().allow(""),
 })
   .required()
