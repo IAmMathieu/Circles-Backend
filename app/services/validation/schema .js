@@ -23,6 +23,7 @@ const loginSchema = Joi.object({
 const patchUserSchema = Joi.object({
   firstname: Joi.string().allow(""),
   lastname: Joi.string().allow(""),
+  surname: Joi.string().allow(""),
   email: Joi.string().allow(""),
   password: Joi.string().min(8).allow(""),
   oldpassword: Joi.string().allow(""),
