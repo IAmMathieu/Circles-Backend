@@ -142,9 +142,6 @@ const userController = {
     // Check if user exist
     const user = await userDataMapper.getUserById(userId);
 
-    //console.log(user);
-    console.log(req.body);
-
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
@@ -157,27 +154,26 @@ const userController = {
           fetchPassword
         );
 
-        if (!isPasswordCorrect) {
-          res.status(400).send("Password is incorrect");
-        } else {
-          delete req.body.oldpassword;
+        console.log(isPasswordCorrect);
 
+        if (isPasswordCorrect) {
+          delete req.body.oldpassword;
           if (req.body.password) {
             req.body.password = await bcrypt.hash(
               req.body.password,
               Number(process.env.saltRounds)
             );
+            const patchUser = await userDataMapper.patchUser(userId, req.body);
+            if (patchUser) {
+              res.status(201).send("User is changed");
+            } else {
+              res.status(400).send("Bad request or User not found");
+            }
           }
+        } else {
+          res.status(400).send("Password is incorrect");
         }
       }
-    }
-
-    const patchUser = await userDataMapper.patchUser(userId, req.body);
-
-    if (patchUser) {
-      res.status(201).send("User is changed");
-    } else {
-      res.status(400).send("Bad request or User not found");
     }
   },
 
