@@ -180,7 +180,7 @@ const userController = {
             }
           }
         }
-      } else if (req.body.newPassword) {
+      } else if (req.body.newpassword) {
         if (!req.body.password) {
           delete req.body.newpassword;
           res
@@ -199,10 +199,11 @@ const userController = {
             res.status(400).send("Password is incorrect");
           } else {
             req.body.password = await bcrypt.hash(
-              req.body.newPassword,
+              req.body.newpassword,
               Number(process.env.saltRounds)
             );
 
+            delete req.body.newpassword;
             const patchUser = await userDataMapper.patchUser(userId, req.body);
 
             if (!patchUser) {
