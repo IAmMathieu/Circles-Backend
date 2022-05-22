@@ -72,52 +72,53 @@ const userController = {
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.unique_code = sanitizeHtml(req.body.unique_code);
 
-    if (req.body.img_url == "") {
-      axios
-        .get("https://randomuser.me/api/")
-        .then((response) => {
-          const img_url = response.data.results[0].picture.large;
-          req.body.img_url = img_url;
-        })
-        .catch((err) => console.log("unable to fetch"));
-    }
+    const fetchUser = await userDataMapper.getUser(req.body.email);
 
-    req.body.validationCode = await generateUser();
-    req.body.isValid = false;
-
-    if (
-      !req.body.firstname ||
-      !req.body.lastname ||
-      !req.body.email ||
-      !req.body.birthdate ||
-      !req.body.password
-    ) {
-      res.status(400).send("Bad request");
+    if (fetchUser) {
+      res.status(400).send("Email already exist in Database");
     } else {
-      const userData = req.body;
+      if (req.body.img_url == "") {
+        const imgUrl = await axios.get("https://randomuser.me/api/");
+        req.body.img_url = imgUrl.data.results[0].picture.large;
+      }
 
-      let userPassword = req.body.password;
-      //Hash of password
-      userData.password = await bcrypt.hash(
-        userPassword,
-        Number(process.env.saltRounds)
-      );
+      req.body.validationCode = await generateUser();
+      req.body.isValid = false;
 
-      sendMail.sendEmailValidator(userData.email, userData.validationCode);
-
-      const createdUser = await userDataMapper.createUser(userData);
-
-      if (!createdUser) {
-        res.status(400).send("Bad Request");
+      if (
+        !req.body.firstname ||
+        !req.body.lastname ||
+        !req.body.email ||
+        !req.body.birthdate ||
+        !req.body.password
+      ) {
+        res.status(400).send("Bad request");
       } else {
-        if (req.body.unique_code) {
-          const uniqueCode = req.body.unique_code;
-          const circle = circleDatamapper.addUserToCircle(
-            createdUser.user_id,
-            uniqueCode
-          );
+        const userData = req.body;
+
+        let userPassword = req.body.password;
+        //Hash of password
+        userData.password = await bcrypt.hash(
+          userPassword,
+          Number(process.env.saltRounds)
+        );
+
+        sendMail.sendEmailValidator(userData.email, userData.validationCode);
+
+        const createdUser = await userDataMapper.createUser(userData);
+
+        if (!createdUser) {
+          res.status(400).send("Bad Request");
+        } else {
+          if (req.body.unique_code) {
+            const uniqueCode = req.body.unique_code;
+            const circle = circleDatamapper.addUserToCircle(
+              createdUser.user_id,
+              uniqueCode
+            );
+          }
+          res.status(201).send("User created, waiting for email validation");
         }
-        res.status(201).send("User created, waiting for email validation");
       }
     }
   },
