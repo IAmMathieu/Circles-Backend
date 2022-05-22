@@ -135,7 +135,11 @@ const userController = {
     req.body.img_url = sanitizeHtml(req.body.img_url);
 
     Object.keys(req.body).forEach((key) => {
-      if (req.body[key] == "") {
+      if (
+        req.body[key] == "" ||
+        req.body[key] == undefined ||
+        req.body[key] == "undefined"
+      ) {
         delete req.body[key];
       }
     });
@@ -146,35 +150,77 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      if ((req.body.newpassword || req.body.email) && req.body.password) {
-        const password = req.body.password;
-        const fetchPassword = user.password;
-
-        const isPasswordCorrect = await bcrypt.compare(password, fetchPassword);
-
-        if (!isPasswordCorrect) {
-          res.status(400).send("Password is incorrect");
-        } else {
-          req.body.password = await bcrypt.hash(
-            req.body.newpassword,
-            Number(process.env.saltRounds)
-          );
+      if (req.body.email) {
+        if (!req.body.password) {
           delete req.body.newpassword;
-          const patchUser = await userDataMapper.patchUser(userId, req.body);
-          if (patchUser) {
-            res.status(201).send("User is changed");
+          res.status(400).send("Current password is needed to change email");
+        } else {
+          const password = req.body.password;
+          const fetchPassword = user.password;
+
+          const isPasswordCorrect = await bcrypt.compare(
+            password,
+            fetchPassword
+          );
+
+          if (!isPasswordCorrect) {
+            res.status(400).send("Password is incorrect");
           } else {
-            res.status(400).send("Bad request or User not found");
+            req.body.password = await bcrypt.hash(
+              req.body.password,
+              Number(process.env.saltRounds)
+            );
+
+            const patchUser = await userDataMapper.patchUser(userId, req.body);
+
+            if (!patchUser) {
+              res.status(400).send("Bad request cant patch user");
+            } else {
+              res.status(200).send("User'info successfully changed");
+            }
+          }
+        }
+      } else if (req.body.newPassword) {
+        if (!req.body.password) {
+          delete req.body.newpassword;
+          res
+            .status(400)
+            .send("You need to provide New AND Old password to change it");
+        } else {
+          const password = req.body.password;
+          const fetchPassword = user.password;
+
+          const isPasswordCorrect = await bcrypt.compare(
+            password,
+            fetchPassword
+          );
+
+          if (!isPasswordCorrect) {
+            res.status(400).send("Password is incorrect");
+          } else {
+            req.body.password = await bcrypt.hash(
+              req.body.newPassword,
+              Number(process.env.saltRounds)
+            );
+
+            const patchUser = await userDataMapper.patchUser(userId, req.body);
+
+            if (!patchUser) {
+              res.status(400).send("Bad request cant patch user");
+            } else {
+              res.status(200).send("User'info successfully changed");
+            }
           }
         }
       } else {
-        delete req.body.password;
         delete req.body.newpassword;
+        delete req.body.password;
         const patchUser = await userDataMapper.patchUser(userId, req.body);
-        if (patchUser) {
-          res.status(201).send("User is changed");
+
+        if (!patchUser) {
+          res.status(400).send("Bad request cant patch user");
         } else {
-          res.status(400).send("Bad request or User not found");
+          res.status(200).send("User'info successfully changed");
         }
       }
     }
