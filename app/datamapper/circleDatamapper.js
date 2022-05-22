@@ -1,3 +1,4 @@
+const { user } = require("pg/lib/defaults");
 const client = require("../config/database");
 
 const circleDatamapper = {
@@ -58,18 +59,23 @@ const circleDatamapper = {
     return circle.rows[0];
   },
 
-  async updateCircle(id, data) {
-    const fields = Object.keys(data).map(
-      (prop, index) =>
-        `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`
-    );
+  async updateCircle(circleId, data) {
+    const fields = Object.keys(data).map((prop, index) => {
+      if (prop == "user_id") {
+        return `"${prop}" = COALESCE(NULLIF($${index + 1}, 0), "${prop}")`;
+      } else {
+        return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;
+      }
+    });
     const values = Object.values(data);
 
+    console.log(fields);
+
     const updatedCircle = await client.query(
-      `UPDATE circle SET ${fields} WHERE id = $${
+      `UPDATE circle SET ${fields} WHERE "circle".id = $${
         fields.length + 1
-      } RETURNING *`,
-      [...values, id]
+      } AND user_id = $${fields.length + 2} RETURNING *`,
+      [...values, circleId, data.user_id]
     );
 
     return updatedCircle.rows[0];

@@ -24,7 +24,8 @@ const circleController = {
       user_id: req.body.user_id,
       unique_code: await generateCircle(),
     };
-    console.log(circleData)
+
+    circleData.img_url = "https://picsum.photos/450/300";
     const circle = await circleDatamapper.createCircle(circleData);
 
     res.json(circle);
@@ -33,11 +34,10 @@ const circleController = {
   async updateCircle(req, res) {
     const circleId = req.params.id;
 
-    (req.body.name = sanitizeHtml(req.body.name)),
-      (req.body.description = sanitizeHtml(req.body.description)),
-      (req.body.color = sanitizeHtml(req.body.color)),
-      (req.body.img_url = sanitizeHtml(req.body.img_url)),
-      console.log(req.body);
+    req.body.name = sanitizeHtml(req.body.name);
+    req.body.description = sanitizeHtml(req.body.description);
+    req.body.color = sanitizeHtml(req.body.color);
+    req.body.img_url = sanitizeHtml(req.body.img_url);
 
     const circle = await circleDatamapper.updateCircle(circleId, req.body);
 

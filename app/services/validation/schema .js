@@ -55,10 +55,11 @@ const updateCircleSchema = Joi.object({
   description: Joi.string().allow(""),
   color: Joi.string().allow(""),
   img_url: Joi.string().allow(""),
+  user_id: Joi.number(),
 })
   .required()
-  .min(1)
-  .max(4);
+  .min(2)
+  .max(5);
 
 const createEventSchema = Joi.object({
   title: Joi.string(),
