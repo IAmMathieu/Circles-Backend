@@ -131,8 +131,8 @@ const userController = {
     req.body.surname = sanitizeHtml(req.body.surname);
     req.body.email = sanitizeHtml(req.body.email);
     req.body.password = sanitizeHtml(req.body.password);
+    req.body.newpassword = sanitizeHtml(req.body.newpassword);
     req.body.img_url = sanitizeHtml(req.body.img_url);
-    req.body.oldpassword = sanitizeHtml(req.body.oldpassword);
 
     Object.keys(req.body).forEach((key) => {
       if (req.body[key] == "") {
@@ -146,33 +146,35 @@ const userController = {
     if (!user) {
       res.status(401).send("No User with this id in database ");
     } else {
-      if (req.body.oldpassword || req.body.email) {
-        const oldpassword = req.body.oldpassword;
+      if ((req.body.newpassword || req.body.email) && req.body.password) {
+        const password = req.body.password;
         const fetchPassword = user.password;
 
-        const isPasswordCorrect = await bcrypt.compare(
-          oldpassword,
-          fetchPassword
-        );
+        const isPasswordCorrect = await bcrypt.compare(password, fetchPassword);
 
-        console.log(isPasswordCorrect);
-
-        if (isPasswordCorrect) {
-          delete req.body.oldpassword;
-          if (req.body.password) {
-            req.body.password = await bcrypt.hash(
-              req.body.password,
-              Number(process.env.saltRounds)
-            );
-            const patchUser = await userDataMapper.patchUser(userId, req.body);
-            if (patchUser) {
-              res.status(201).send("User is changed");
-            } else {
-              res.status(400).send("Bad request or User not found");
-            }
-          }
-        } else {
+        if (!isPasswordCorrect) {
           res.status(400).send("Password is incorrect");
+        } else {
+          req.body.password = await bcrypt.hash(
+            req.body.newpassword,
+            Number(process.env.saltRounds)
+          );
+          delete req.body.newpassword;
+          const patchUser = await userDataMapper.patchUser(userId, req.body);
+          if (patchUser) {
+            res.status(201).send("User is changed");
+          } else {
+            res.status(400).send("Bad request or User not found");
+          }
+        }
+      } else {
+        delete req.body.password;
+        delete req.body.newpassword;
+        const patchUser = await userDataMapper.patchUser(userId, req.body);
+        if (patchUser) {
+          res.status(201).send("User is changed");
+        } else {
+          res.status(400).send("Bad request or User not found");
         }
       }
     }

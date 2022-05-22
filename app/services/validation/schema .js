@@ -26,7 +26,7 @@ const patchUserSchema = Joi.object({
   surname: Joi.string().allow(""),
   email: Joi.string().allow(""),
   password: Joi.string().min(8).allow(""),
-  oldpassword: Joi.string().allow(""),
+  newpassword: Joi.string().allow(""),
   birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
 })
