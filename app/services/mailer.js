@@ -63,7 +63,7 @@ const sendMail = {
   },
 
   InviteToCircle(email, circleCode, userExist) {
-    console.log(circleCode);
+    console.log("In mailer: " + circleCode);
     let mailOptions;
     let sender = "Circles Admin";
     mailOptions = {
