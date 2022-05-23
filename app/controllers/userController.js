@@ -295,6 +295,8 @@ const userController = {
   async sendResetEmail(req, res) {
     const email = req.body.email;
 
+    console.log(email);
+
     const user = await userDataMapper.getUser(email);
 
     if (!user) {
