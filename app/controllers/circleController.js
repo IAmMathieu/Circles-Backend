@@ -99,6 +99,8 @@ const circleController = {
     const circleCode = req.body.unique_code;
     const email = req.body.email;
 
+    console.log(circleCode);
+
     const user = await userDataMapper.getUser(email);
     let userExist = false;
 
