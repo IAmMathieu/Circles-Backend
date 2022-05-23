@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const axios = require("axios").default;
 const sanitizeHtml = require("sanitize-html");
 const circleDatamapper = require("../datamapper/circleDatamapper");
+const e = require("express");
 
 const userController = {
   async getUser(req, res) {
@@ -109,18 +110,19 @@ const userController = {
 
         if (!createdUser) {
           res.status(400).send("Bad Request");
+        } else if (
+          req.body.unique_code != "" &&
+          req.body.unique_code != null &&
+          req.body.unique_code != undefined
+        ) {
+          const uniqueCode = req.body.unique_code;
+          const circle = circleDatamapper.addUserToCircle(
+            createdUser.user_id,
+            uniqueCode
+          );
+
+          res.status(201).send("User created, waiting for email validation");
         } else {
-          if (
-            req.body.unique_code != "" &&
-            req.body.unique_code != null &&
-            req.body.unique_code != undefined
-          ) {
-            const uniqueCode = req.body.unique_code;
-            const circle = circleDatamapper.addUserToCircle(
-              createdUser.user_id,
-              uniqueCode
-            );
-          }
           res.status(201).send("User created, waiting for email validation");
         }
       }
