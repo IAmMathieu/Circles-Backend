@@ -68,7 +68,6 @@ router.post(
 router.post(
   "/api/circle/new/:user_id(\\d+)",
   jwbtoken.getAuthorization,
-  validationModule.validateBody(addUserToCircle),
   routerWrapper(circleController.addUserToCircle)
 );
 

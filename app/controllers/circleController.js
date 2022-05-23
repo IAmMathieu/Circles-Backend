@@ -63,8 +63,9 @@ const circleController = {
     const userId = req.params.user_id;
     const uniqueCode = sanitizeHtml(req.body.unique_code);
 
-    console.log("circle unique_code in addUserToCircles: code" + uniqueCode);
-    console.log("circle unique_code in addUserToCircles: user" + uniqueCode);
+    console.log("circle unique_code in addUserToCircles Code:  " + uniqueCode);
+    console.log("circle unique_code in addUserToCircles User:  " + userId);
+
     const circle = await circleDatamapper.addUserToCircle(userId, uniqueCode);
 
     if (circle) {
