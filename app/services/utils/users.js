@@ -4,8 +4,8 @@ const users = [];
 
 const usersUtils = {
   // Join user to chat
-  userJoin(socketId, dbId, surname, room) {
-    const dbUser = userDataMapper.getUserInfo(dbId);
+  async userJoin(socketId, dbId, surname, room) {
+    const dbUser = await userDataMapper.getUserInfo(dbId);
     const img_url = dbUser.img_url;
 
     const user = { socketId, dbId, surname, img_url, room };
@@ -34,7 +34,7 @@ const usersUtils = {
 
     if (index !== -1) {
       users.splice(index, 1)[0];
-      console.log(users);
+      // console.log(users);
       return users;
     }
   },

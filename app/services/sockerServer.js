@@ -7,8 +7,8 @@ const botName = "Jarvis";
 exports = module.exports = function (io) {
   io.on("connection", (socket) => {
     // console.log(socket.id);
-    socket.on("joinRoom", ({ user_id, surname, room }) => {
-      const user = usersUtils.userJoin(socket.id, user_id, surname, room);
+    socket.on("joinRoom", async ({ user_id, surname, room }) => {
+      const user = await usersUtils.userJoin(socket.id, user_id, surname, room);
 
       socket.join(user.room);
 
@@ -44,7 +44,7 @@ exports = module.exports = function (io) {
 
       io.in(user.room).emit(
         "message",
-        formatMessage(user.dbId, user.surname, msg)
+        formatMessage(user.dbId, user.surname, user.img_url, msg)
       );
     });
 
