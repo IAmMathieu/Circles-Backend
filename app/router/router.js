@@ -78,8 +78,6 @@ router.post(
   routerWrapper(circleController.inviteToCircle)
 );
 
-router.post("/api/circle/join", routerWrapper(circleController.joinCircle));
-
 router.delete(
   "/api/circle/remove/:user_id(\\d+)",
   jwbtoken.getAuthorization,

@@ -110,7 +110,11 @@ const userController = {
         if (!createdUser) {
           res.status(400).send("Bad Request");
         } else {
-          if (req.body.unique_code) {
+          if (
+            req.body.unique_code != "" &&
+            req.body.unique_code != null &&
+            req.body.unique_code != undefined
+          ) {
             const uniqueCode = req.body.unique_code;
             const circle = circleDatamapper.addUserToCircle(
               createdUser.user_id,

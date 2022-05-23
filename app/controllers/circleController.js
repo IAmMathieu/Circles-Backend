@@ -114,42 +114,6 @@ const circleController = {
       res.status(200).send("Email sent");
     }
   },
-
-  // async joinCircle(req, res) {
-  //   const unique_code = req.body.unique_code;
-  //   const email = req.body.email;
-  //   const password = req.body.password;
-
-  //   const user = await userDataMapper.getUser(email);
-
-  //   if (!user) {
-  //     res.status(400).send("Email not found in database");
-  //   } else {
-  //     const givenPassword = password;
-  //     const fetchPassword = user.password;
-
-  //     const isPasswordCorrect = await bcrypt.compare(
-  //       givenPassword,
-  //       fetchPassword
-  //     );
-
-  //     if (!isPasswordCorrect) {
-  //       res.status(401).send("Password is incorrect");
-  //     } else {
-  //       const circle = await circleDatamapper.addUserToCircle(
-  //         user.id,
-  //         unique_code
-  //       );
-
-  //       res.json({
-  //         logged: true,
-  //         user_id: user.id,
-  //         surname: user.surname,
-  //         token: jwbtoken.generateAccessToken(user.id),
-  //       });
-  //     }
-  //   }
-  // },
 };
 
 module.exports = circleController;
