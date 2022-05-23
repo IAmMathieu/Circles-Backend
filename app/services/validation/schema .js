@@ -16,6 +16,7 @@ const registerSchema = Joi.object({
 const loginSchema = Joi.object({
   email: Joi.string(),
   password: Joi.string(),
+  unique_code: Joi.string().allow(""),
 })
   .required()
   .min(2);
