@@ -62,6 +62,8 @@ const circleController = {
   async addUserToCircle(req, res) {
     const userId = req.params.user_id;
     const uniqueCode = sanitizeHtml(req.body.unique_code);
+
+    console.log("circle unique_code in addUserToCircles: " + uniqueCode);
     const circle = await circleDatamapper.addUserToCircle(userId, uniqueCode);
 
     if (circle) {
@@ -99,7 +101,8 @@ const circleController = {
     const circleCode = req.body.unique_code;
     const email = req.body.email;
 
-    console.log("In circleController: " + circleCode);
+    console.log("In circleController: unique_code " + circleCode);
+    console.log("In circleController: email " + email);
 
     const user = await userDataMapper.getUser(email);
     let userExist = false;

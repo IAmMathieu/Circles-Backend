@@ -273,7 +273,7 @@ const userController = {
 
     const user = await userDataMapper.getUserByCode(validationCode);
 
-    console.log(user);
+    console.log("userController.validateEmail User:" + user);
 
     if (user) {
       user.isvalid = true;
@@ -282,7 +282,9 @@ const userController = {
         user.isvalid
       );
 
-      console.log(validatedUser);
+      console.log(
+        "userController.validateEmail validatedUser:" + validatedUser
+      );
       res.status(200).json({
         logged: true,
         user_id: validatedUser.id,
@@ -295,7 +297,7 @@ const userController = {
   async sendResetEmail(req, res) {
     const email = req.body.email;
 
-    console.log(email);
+    console.log("userController.sendResetEmail email :" + email);
 
     const user = await userDataMapper.getUser(email);
 

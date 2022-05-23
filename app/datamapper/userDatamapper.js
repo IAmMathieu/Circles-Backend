@@ -75,7 +75,7 @@ const userDataMapper = {
       }
     });
 
-    console.log(fields);
+    console.log("userDatamapper.patchUser : " + fields);
 
     const values = Object.values(data);
 
@@ -155,8 +155,8 @@ const userDataMapper = {
   },
 
   async patchUserValidate(userId, isValid) {
-    console.log(userId);
-    console.log(isValid);
+    console.log("userDatamapper.pathUserValidate userId : " + userId);
+    console.log("userDatamapper.pathUserValidate isValid : " + isValid);
     const updatedUser = await client.query(
       `UPDATE "user" SET "isvalid" = $1 WHERE "user".id = $2 RETURNING *`,
       [isValid, userId]

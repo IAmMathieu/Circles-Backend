@@ -69,7 +69,7 @@ const circleDatamapper = {
     });
     const values = Object.values(data);
 
-    console.log(fields);
+    console.log("circleDatamapper.updateCircle : " + fields);
 
     const updatedCircle = await client.query(
       `UPDATE circle SET ${fields} WHERE "circle".id = $${
