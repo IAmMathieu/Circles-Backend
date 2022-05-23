@@ -9,6 +9,7 @@ const registerSchema = Joi.object({
   password: Joi.string().min(8),
   birthdate: Joi.date().format("YYYY-MM-DD"),
   img_url: Joi.string().allow(""),
+  unique_code: Joi.string().allow(""),
 })
   .required()
   .min(6);
