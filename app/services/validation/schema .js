@@ -46,7 +46,7 @@ const createCircleSchema = Joi.object({
   .min(5);
 
 const addUserToCircle = Joi.object({
-  unique_code: Joi.string().min(8).max(8),
+  unique_code: Joi.string().length(8),
 })
   .required()
   .min(1);
