@@ -61,7 +61,7 @@ const circleController = {
 
   async addUserToCircle(req, res) {
     const userId = req.params.user_id;
-    const uniqueCode = sanitizeHtml(req.body.unique_code);
+    const uniqueCode = req.body.unique_code;
 
     console.log("circle unique_code in addUserToCircles Code:  " + uniqueCode);
     console.log("circle unique_code in addUserToCircles User:  " + userId);
