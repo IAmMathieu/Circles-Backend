@@ -10,6 +10,7 @@ const registerSchema = Joi.object({
   birthdate: Joi.date().format("YYYY-MM-DD"),
   img_url: Joi.string().allow(""),
   unique_code: Joi.string().allow(""),
+  firstconnect: Joi.boolean().allow(),
 })
   .required()
   .min(6);
@@ -31,7 +32,7 @@ const patchUserSchema = Joi.object({
   newpassword: Joi.string().allow(""),
   birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
-  firstConnect: Joi.boolean(),
+  firstconnect: Joi.boolean(),
 })
   .required()
   .min(1)
