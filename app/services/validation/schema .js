@@ -31,10 +31,11 @@ const patchUserSchema = Joi.object({
   newpassword: Joi.string().allow(""),
   birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
+  firstconnect: Joi.boolean(),
 })
   .required()
   .min(1)
-  .max(8);
+  .max(9);
 
 const createCircleSchema = Joi.object({
   name: Joi.string(),
