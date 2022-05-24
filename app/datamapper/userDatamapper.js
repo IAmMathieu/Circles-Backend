@@ -15,7 +15,7 @@ const userDataMapper = {
 
   async getUserById(id) {
     const query = {
-      text: `SELECT firstname, lastname, surname, email, password, birthdate, img_url 
+      text: `SELECT firstname, lastname, surname, email, password, birthdate, img_url, firstconnect
                 FROM "user"
                 WHERE "user".id=$1`,
       values: [id],
