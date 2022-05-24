@@ -15,7 +15,7 @@ const userDataMapper = {
 
   async getUserById(id) {
     const query = {
-      text: `SELECT firstname, lastname, surname, email, password, birthdate, img_url, firstconnect
+      text: `SELECT firstname, lastname, surname, email, password, birthdate, img_url, firstconnect, firstcircle
                 FROM "user"
                 WHERE "user".id=$1`,
       values: [id],
@@ -28,7 +28,7 @@ const userDataMapper = {
   //Find a user by id
   async getUserInfo(id) {
     const query = {
-      text: `SELECT firstname, lastname, surname, email, birthdate, img_url, firstconnect
+      text: `SELECT firstname, lastname, surname, email, birthdate, img_url, firstconnect, firstcircle
                 FROM "user"
                 WHERE "user".id = $1`,
       values: [id],
@@ -71,6 +71,8 @@ const userDataMapper = {
       if (prop == "birthdate") {
         return `"${prop}" = $${index + 1}`;
       } else if (prop == "firstconnect") {
+        return `"${prop}" = $${index + 1}`;
+      } else if (prop == "firstcircle") {
         return `"${prop}" = $${index + 1}`;
       } else {
         return `"${prop}" = COALESCE(NULLIF($${index + 1}, ''), "${prop}")`;

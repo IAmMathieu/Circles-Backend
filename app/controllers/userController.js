@@ -140,6 +140,7 @@ const userController = {
     req.body.newpassword = sanitizeHtml(req.body.newpassword);
     req.body.img_url = sanitizeHtml(req.body.img_url);
     req.body.firstconnect = sanitizeHtml(req.body.firstconnect);
+    req.body.firstcircle = sanitizeHtml(req.body.firstcircle);
 
     Object.keys(req.body).forEach((key) => {
       if (

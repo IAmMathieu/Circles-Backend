@@ -33,6 +33,7 @@ const patchUserSchema = Joi.object({
   birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
   firstconnect: Joi.boolean(),
+  firstcircle: Joi.boolean(),
 })
   .required()
   .min(1)
