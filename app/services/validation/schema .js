@@ -32,8 +32,8 @@ const patchUserSchema = Joi.object({
   newpassword: Joi.string().allow(""),
   birthdate: Joi.date().format("YYYY-MM-DD").allow(""),
   img_url: Joi.string().allow(""),
-  firstconnect: Joi.boolean(),
-  firstcircle: Joi.boolean(),
+  firstconnect: Joi.boolean().allow(""),
+  firstcircle: Joi.boolean().allow(""),
 })
   .required()
   .min(1)
