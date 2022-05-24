@@ -145,7 +145,7 @@ const userController = {
       if (
         req.body[key] == "" ||
         req.body[key] == undefined ||
-        req.body[key] == "undefined" |
+        req.body[key] == "undefined"
       ) {
         delete req.body[key];
       }
