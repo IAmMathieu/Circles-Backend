@@ -81,6 +81,8 @@ const userDataMapper = {
 
     const values = Object.values(data);
 
+    console.log("userDatamapper.patchUser : " + values);
+
     const updatedUser = await client.query(
       `UPDATE "user" SET ${fields} WHERE id = $${
         fields.length + 1
