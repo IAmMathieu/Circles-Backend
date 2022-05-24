@@ -1,5 +1,6 @@
 require("dotenv").config();
 const port = process.env.PORT || 4242;
+const path = require("path");
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
@@ -12,7 +13,7 @@ const server = http.createServer(app).listen(
 const cors = require("cors");
 const router = require("./app/router/router");
 
-app.use(express.static("public"));
+app.use("/images", express.static(path.resolve(__dirname, "public/images/")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
