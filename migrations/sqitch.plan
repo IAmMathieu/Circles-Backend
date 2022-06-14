@@ -1,5 +1,13 @@
 %syntax-version=1.0.0
 %project=circles
 
-create_tables 2022-05-03T12:40:00Z Etudiant O'clock <student@teleporter> # Creations des tables user, cercle, message, event
+userTable 2022-06-13T21:15:09Z ,,, <math@HAL9000> # Add table for users
+circleTable 2022-06-13T21:15:58Z ,,, <math@HAL9000> # Add table for circles
+messageTable 2022-06-13T21:16:48Z ,,, <math@HAL9000> # Add table for chat messages
+eventTable 2022-06-13T21:17:19Z ,,, <math@HAL9000> # Add table for calendar events
+circleHasUserTable 2022-06-13T21:18:52Z ,,, <math@HAL9000> # Add pivot table circle has user
+adminOfCircleView 2022-06-13T21:22:14Z ,,, <math@HAL9000> # create a view to get admin info of a circle
+messageDetailView 2022-06-13T21:23:03Z ,,, <math@HAL9000> # create a view to get all the details of a message
+eventsCircleView 2022-06-13T21:24:43Z ,,, <math@HAL9000> # create a view to count the number of futur events of a circle
+usersOfCircleView 2022-06-13T21:21:32Z ,,, <math@HAL9000> # create a view to get users info of a circle
 surname_trigfunc 2022-05-03T13:24:12Z Etudiant O'clock <student@teleporter> # Creation d'une function et d'un trigger pour generer un surname si il est null a l'insertion
